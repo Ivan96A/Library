@@ -1,6 +1,7 @@
 package digital.library.book.domain;
 
 import digital.library.author.domain.Author;
+import digital.library.image.Image;
 import digital.library.publisher.domain.Publisher;
 import digital.library.type.file.domain.TypeFile;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "books")
-public class Book implements Serializable{
+public class Book implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -43,13 +44,17 @@ public class Book implements Serializable{
     private String addressFileOnNet;
 
     @ManyToMany(targetEntity = Author.class, mappedBy = "books")
-    Set<Author> authors = new HashSet<>();
+    private Set<Author> authors = new HashSet<>();
 
     @ManyToMany(targetEntity = Publisher.class, mappedBy = "books")
-    Set<Publisher> publishers = new HashSet<>();
+    private Set<Publisher> publishers = new HashSet<>();
 
     @ManyToMany(targetEntity = TypeFile.class, mappedBy = "books")
-    Set<TypeFile> typeFiles = new HashSet<>();
+    private Set<TypeFile> typeFiles = new HashSet<>();
+
+    @OneToOne
+    @MapsId
+    private Image image;
 
     public Book() {
 
