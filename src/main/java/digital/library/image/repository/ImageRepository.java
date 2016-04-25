@@ -1,5 +1,6 @@
-package digital.library.image;
+package digital.library.image.repository;
 
+import digital.library.image.domain.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

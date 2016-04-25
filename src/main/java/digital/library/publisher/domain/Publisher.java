@@ -42,7 +42,7 @@ public class Publisher implements Serializable{
     private String telephoneNumber;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Book.class)
+    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL, mappedBy = "publisher")
     private Set<Book> books = new HashSet<>();
 
     public Publisher() {

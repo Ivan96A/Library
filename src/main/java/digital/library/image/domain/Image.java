@@ -1,4 +1,4 @@
-package digital.library.image;
+package digital.library.image.domain;
 
 import javax.persistence.*;
 

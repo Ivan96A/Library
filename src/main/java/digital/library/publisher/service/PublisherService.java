@@ -1,5 +1,6 @@
 package digital.library.publisher.service;
 
+import digital.library.book.domain.Book;
 import digital.library.publisher.domain.Publisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,4 @@ public interface PublisherService {
     void save(Publisher publisher);
 
     void delete(Publisher publisher);
-
 }

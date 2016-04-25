@@ -22,4 +22,7 @@ public interface BookService {
 
     void deleteImage(Long imageId);
 
+    Page<Book> findAllByPublisher(Pageable pageable, String name);
+
+    Page<Book> findAllByAuthor(Pageable pageable, String name);
 }

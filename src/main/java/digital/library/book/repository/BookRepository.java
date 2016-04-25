@@ -12,4 +12,9 @@ import org.springframework.data.repository.query.Param;
  */
 public interface BookRepository extends JpaRepository<Book, Long>{
 
+    @Query("Select b from Book b where upper(b.publisher.name) like upper(:name)")
+    Page<Book> findAllByPublisher(Pageable pageable, @Param("name") String name);
+
+    @Query("Select b from Book b where upper(b.author.firstName) like upper(:name)")
+    Page<Book> findAllByAuthor(Pageable pageable, @Param("name") String name);
 }

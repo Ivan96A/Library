@@ -1,5 +1,6 @@
 package digital.library.publisher.service.impl;
 
+import digital.library.book.domain.Book;
 import digital.library.publisher.domain.Publisher;
 import digital.library.publisher.repository.PublisherRepository;
 import digital.library.publisher.service.PublisherService;
@@ -37,4 +38,5 @@ public class PublisherServiceImpl implements PublisherService {
     public void delete(Publisher publisher) {
         publisherRepository.delete(publisher);
     }
+
 }

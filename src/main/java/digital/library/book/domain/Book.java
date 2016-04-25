@@ -2,7 +2,7 @@ package digital.library.book.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import digital.library.author.domain.Author;
-import digital.library.image.Image;
+import digital.library.image.domain.Image;
 import digital.library.publisher.domain.Publisher;
 import digital.library.type.file.domain.TypeFile;
 
@@ -10,8 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Iwan on 10.03.2016.
@@ -27,8 +25,8 @@ public class Book implements Serializable {
     private Long id;
 
     @Size(min = 5, max = 50)
-    @Column(name = "nameBook")
-    private String nameBook;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "publisherYear")
     private Date publisherYear;
@@ -45,14 +43,17 @@ public class Book implements Serializable {
     @Column(name = "addressFileOnNet")
     private String addressFileOnNet;
 
-    @ManyToMany(targetEntity = Author.class, mappedBy = "books")
-    private Set<Author> authors = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "publishersId", nullable = false)
+    private Publisher publisher;
 
-    @ManyToMany(targetEntity = Publisher.class, mappedBy = "books")
-    private Set<Publisher> publishers = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "authorsId", nullable = false)
+    private Author author;
 
-    @ManyToMany(targetEntity = TypeFile.class, mappedBy = "books")
-    private Set<TypeFile> typeFiles = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "typeFilesId", nullable = false)
+    private TypeFile typeFile;
 
     @JsonIgnore
     @OneToOne
@@ -62,8 +63,8 @@ public class Book implements Serializable {
 
     }
 
-    public Book(String nameBook, Publisher publisher, Author author, TypeFile typeFile, Date publisherYear, Long countPages, Long sizeFile) {
-        this.nameBook = nameBook;
+    public Book(String name, Publisher publisher, Author author, TypeFile typeFile, Date publisherYear, Long countPages, Long sizeFile) {
+        this.name = name;
         this.publisherYear = publisherYear;
         this.countPages = countPages;
         this.sizeFile = sizeFile;
@@ -77,12 +78,12 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    public String getNameBook() {
-        return nameBook;
+    public String getName() {
+        return name;
     }
 
-    public void setNameBook(String nameBook) {
-        this.nameBook = nameBook;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getPublisherYear() {

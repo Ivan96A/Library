@@ -37,7 +37,7 @@ public class Author implements Serializable{
     private String birthday;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Book.class)
+    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL, mappedBy = "author")
     private Set<Book> books = new HashSet<>();
 
     public Author() {

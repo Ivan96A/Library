@@ -3,10 +3,9 @@ package digital.library.book.service.impl;
 import digital.library.book.domain.Book;
 import digital.library.book.repository.BookRepository;
 import digital.library.book.service.BookService;
-import digital.library.image.Image;
-import digital.library.image.ImageRepository;
+import digital.library.image.domain.Image;
+import digital.library.image.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -67,9 +66,20 @@ public class BookServiceImpl implements BookService {
         imageRepository.delete(imageId);
     }
 
+    @Override
+    public Page<Book> findAllByPublisher(Pageable pageable, String name) {
+        return bookRepository.findAllByPublisher(pageable, name);
+    }
+
+    @Override
+    public Page<Book> findAllByAuthor(Pageable pageable, String name) {
+        return bookRepository.findAllByAuthor(pageable, name);
+    }
+
     private Image getImage(MultipartFile image) throws IOException {
 
         String img = Base64Utils.encodeToString(image.getBytes());
         return new Image(img);
     }
+
 }

@@ -50,7 +50,7 @@ public class TypeFile implements Serializable {
     private String webSiteForDownload;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Book.class)
+    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL, mappedBy = "typeFile")
     private Set<Book> books = new HashSet<>();
 
     public TypeFile() {

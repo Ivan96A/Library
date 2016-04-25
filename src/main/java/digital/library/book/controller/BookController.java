@@ -70,6 +70,23 @@ public class BookController {
     }
 
     @RequestMapping(
+            value = "/searchByPublisher",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<Book> findAllByPublisher(Pageable pageable, @RequestParam("name") String name) {
+        return bookService.findAllByPublisher(pageable, name);
+    }
+
+    @RequestMapping(
+            value = "/searchByAuthor",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Page<Book> findAllByAuthor(Pageable pageable, @RequestParam("name") String name) {
+        return bookService.findAllByAuthor(pageable, name);
+    }
+
+
+    @RequestMapping(
             value = "/image",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
