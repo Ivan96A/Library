@@ -14,7 +14,24 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "typeFiles")
-public class TypeFile implements Serializable{
+public class TypeFile implements Serializable {
+
+    public enum BookType {
+        PDF("PDF"),
+        WORD("WORD"),
+        DJVU("DJVU");
+
+        private final String type;
+
+        BookType(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public String toString() {
+            return type;
+        }
+    }
 
     @Id
     @Column(name = "id")
@@ -23,7 +40,7 @@ public class TypeFile implements Serializable{
 
     @Size(min = 5, max = 50)
     @Column(name = "typeName")
-    private String typeName;
+    private BookType typeName;
 
     @Size(min = 5, max = 250)
     @Column(name = "nameProgramForOpenBook")
@@ -40,7 +57,7 @@ public class TypeFile implements Serializable{
 
     }
 
-    public TypeFile(String typeName, String nameProgramForOpenBook, String webSiteForDownload) {
+    public TypeFile(BookType typeName, String nameProgramForOpenBook, String webSiteForDownload) {
         this.typeName = typeName;
         this.nameProgramForOpenBook = nameProgramForOpenBook;
         this.webSiteForDownload = webSiteForDownload;
@@ -54,11 +71,11 @@ public class TypeFile implements Serializable{
         this.id = id;
     }
 
-    public String getTypeName() {
+    public BookType getTypeName() {
         return typeName;
     }
 
-    public void setTypeName(String typeName) {
+    public void setTypeName(BookType typeName) {
         this.typeName = typeName;
     }
 

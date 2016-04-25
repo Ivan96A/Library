@@ -11,7 +11,7 @@ public class Image {
 
     @Id
     @GeneratedValue
-    @Column
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "image", length = 3000000)

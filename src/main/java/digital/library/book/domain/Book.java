@@ -1,5 +1,6 @@
 package digital.library.book.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import digital.library.author.domain.Author;
 import digital.library.image.Image;
 import digital.library.publisher.domain.Publisher;
@@ -22,6 +23,7 @@ public class Book implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     private Long id;
 
     @Size(min = 5, max = 50)
@@ -52,8 +54,8 @@ public class Book implements Serializable {
     @ManyToMany(targetEntity = TypeFile.class, mappedBy = "books")
     private Set<TypeFile> typeFiles = new HashSet<>();
 
+    @JsonIgnore
     @OneToOne
-    @MapsId
     private Image image;
 
     public Book() {
@@ -121,5 +123,13 @@ public class Book implements Serializable {
 
     public void setAddressFileOnNet(String addressFileOnNet) {
         this.addressFileOnNet = addressFileOnNet;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

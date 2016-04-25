@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * Created by Iwan on 06.04.2016.
@@ -64,5 +67,30 @@ public class BookController {
     public void deleteBook(@RequestParam("id") Long id) {
         Book book = bookService.findById(id);
         bookService.delete(book);
+    }
+
+    @RequestMapping(
+            value = "/image",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getImageByBookId(@RequestParam("id") Long id) {
+        String images = bookService.findById(id).getImage().getImage();
+        return images;
+    }
+
+    @RequestMapping(
+            value = "/image",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public void addImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile image) {
+        bookService.addImage(image, id);
+    }
+
+    @RequestMapping(
+            value = "/image",
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteImage(@RequestParam("id") Long imageId) {
+        bookService.deleteImage(imageId);
     }
 }

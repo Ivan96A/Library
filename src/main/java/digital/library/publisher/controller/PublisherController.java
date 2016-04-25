@@ -38,10 +38,10 @@ public class PublisherController {
                 consumes = MediaType.APPLICATION_JSON_VALUE)
         public void addPublisher(@RequestBody Publisher publisher) {
             if(publisherService.findById(publisher.getId()) != null) {
-                LOGGER.warn("Publisher '{}' already in use!", publisher.getPublisherName());
+                LOGGER.warn("Publisher '{}' already in use!", publisher.getName());
             }
             else {
-                LOGGER.warn("Publisher '{}' has been added!", publisher.getPublisherName());
+                LOGGER.warn("Publisher '{}' has been added!", publisher.getName());
                 publisherService.save(publisher);
             }
         }
@@ -57,7 +57,7 @@ public class PublisherController {
             }
             else {
                 publisherService.save(publisher);
-                LOGGER.info("publisher '" + publisher.getPublisherName() + "' has been update");
+                LOGGER.info("publisher '" + publisher.getName() + "' has been update");
             }
 
         }

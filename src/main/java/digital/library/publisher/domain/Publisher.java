@@ -22,8 +22,8 @@ public class Publisher implements Serializable{
     private Long id;
 
     @Size(min = 5,  max = 250)
-    @Column(name = "publisherName")
-    private String publisherName;
+    @Column(name = "name")
+    private String name;
 
     @Size(min = 5, max = 250)
     @Column(name = "email")
@@ -49,8 +49,8 @@ public class Publisher implements Serializable{
 
     }
 
-    public Publisher(String publisherName, String email, String officialSite, String address, String telephoneNumber) {
-        this.publisherName = publisherName;
+    public Publisher(String name, String email, String officialSite, String address, String telephoneNumber) {
+        this.name = name;
         this.email = email;
         this.officialSite = officialSite;
         this.address = address;
@@ -65,12 +65,12 @@ public class Publisher implements Serializable{
         this.id = id;
     }
 
-    public String getPublisherName() {
-        return publisherName;
+    public String getName() {
+        return name;
     }
 
-    public void setPublisherName(String publisherName) {
-        this.publisherName = publisherName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
