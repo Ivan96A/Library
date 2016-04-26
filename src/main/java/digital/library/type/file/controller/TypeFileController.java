@@ -46,12 +46,8 @@ public class TypeFileController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addTypeFile(@RequestBody TypeFile typeFile) {
-        if (typeFileService.findById(typeFile.getId()) != null) {
-            LOGGER.warn("TypeFile '{}' already in use!", typeFile.getId());
-        } else {
             LOGGER.warn("TypeFile '{}' has been added!", typeFile.getId());
             typeFileService.save(typeFile);
-        }
     }
 
     @RequestMapping(

@@ -47,12 +47,8 @@ public class BookController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addBook(@RequestBody Book book) {
-        if(bookService.findById(book.getId()) != null) {
-            LOGGER.warn("Book '{}' already in use!", book.getId());
-        } else {
             bookService.save(book);
             LOGGER.info("Book '{}' has been added", book.getId());
-        }
     }
 
     @RequestMapping(

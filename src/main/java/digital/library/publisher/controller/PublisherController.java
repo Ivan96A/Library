@@ -47,13 +47,8 @@ public class PublisherController {
                 produces = MediaType.APPLICATION_JSON_VALUE,
                 consumes = MediaType.APPLICATION_JSON_VALUE)
         public void addPublisher(@RequestBody Publisher publisher) {
-            if(publisherService.findById(publisher.getId()) != null) {
-                LOGGER.warn("Publisher '{}' already in use!", publisher.getName());
-            }
-            else {
                 LOGGER.warn("Publisher '{}' has been added!", publisher.getName());
                 publisherService.save(publisher);
-            }
         }
 
         @RequestMapping(
