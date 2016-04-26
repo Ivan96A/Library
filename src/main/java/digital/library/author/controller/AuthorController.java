@@ -47,7 +47,7 @@ public class AuthorController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addAuthor(@RequestBody Author author) {
-        if ((authorService.findByEmail(author.getEmail()) != null) || (authorService.findById(author.getId()) != null)) {
+        if ((authorService.findByEmail(author.getEmail()) != null)) {
             LOGGER.warn("Author '{}' already in use!", author.getFirstName());
         } else {
             LOGGER.warn("Author '{}' has been added!", author.getFirstName());

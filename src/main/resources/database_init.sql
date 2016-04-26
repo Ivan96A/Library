@@ -20,7 +20,7 @@ insert into authors(first_name, last_name, email, birthday)
   insert into publishers(name, email, official_site, address, telephone_number)
   values('KDD', 'kdd@mail.com', 'kdd.com', 'Kiyv', '0995754646545');
 
- /* insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
+  /*insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
   VALUE(0, 'pdf Reader', 'pdf.com');
   insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
   VALUE(1, 'word Reader', 'reader.com');
