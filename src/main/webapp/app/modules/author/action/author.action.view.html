@@ -1,0 +1,29 @@
+<div class="panel panel-default popup">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
+  </div>
+  <div class="panel-body">
+    <ng-form name="authorForm">
+    <div class="col-lg-12">
+      <label translate>firstName</label>
+      <input name="firstName" ng-model="firstName" type="text" class="form-control" pattern="^[A-zА-я]+$" minlength="5">
+      <label translate>lastName</label>
+      <input name="lastName" ng-model="lastName" type="text" class="form-control" pattern="^[A-zА-я]+$" minlength="5">
+      <label translate>email</label>
+      <input name="email" ng-model="email" type="email" class="form-control">
+      <label translate>birthday</label>
+      <div class="input-group">
+        <input name="birthday" ng-model="birthday" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="birthdayValue" readonly>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </div>
+    </div>
+    </ng-form>
+    <div class="col-lg-12 tools">
+      <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+      <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<!-- /.row -->
+<div class="row">
+  <div class="col-lg-9">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading no-padding">
+        <ol class="breadcrumb no-margin">
+          <li>
+            <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
+          </li>
+          <li class="active" translate>
+            <i class="fa fa-table"></i> {{table}}
+          </li>
+        </ol>
+      </div>
+      <div class="table-responsive" ng-controller="TableCtrl">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th ng-repeat="column in tableHeader" ng-click="sort(column)"><i ng-class = "{'glyphicon glyphicon-arrow-up':isSortUp(column), 'glyphicon glyphicon-arrow-down':isSortDown(column)}"></i><span translate>{{column}}</span></th>
+              <th translate>action</th>
+            </tr>
+          </thead>
+          <tbody ng-switch="table">
+            <tr ng-switch-when="book" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
+              <td><a ng-href="#/book/{{row.id}}">{{row.nameBook}}</a></td>
+              <td>{{row.publisherYear}}</td>
+              <td>{{row.countPages}}</td>
+              <td>{{row.sizeFile}}</td>
+              <td>{{row.addressFileOnDisk}}</td>
+              <td>{{row.addressFileOnNet}}</td>
+              <td>
+                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)" uib-tooltip="Edit"></i>
+                <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)" uib-tooltip="Remove"></i>
+              </td>
+            </tr>
+            <tr ng-switch-when="software" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
+              <td><a href="#/software/{{row.id}}">{{row.name}}</a></td>
+              <td>{{row.version}}</td>
+              <td>{{row.release}}</td>
+              <td>{{row.book.name}}</td>
+              <td ng-switch="row.author.type" >
+                <span ng-switch-when="FREE" class="label label-success" uib-popover="{{row.author.name}} {{row.author.priceForOne}}, {{row.author.minimumUsers}}" popover-trigger="mouseenter" popover-title="author" popover-placement="top-left">free</span>
+                <span ng-switch-when="TRIAL" class="label label-warning" uib-popover="{{row.author.name}}, {{row.author.priceForOne}}, {{row.author.minimumUsers}}" popover-trigger="mouseenter" popover-title="author" popover-placement="top-left">trial</span>
+                <span ng-switch-when="PAID" class="label label-primary" uib-popover="{{row.author.name}}, {{row.author.priceForOne}}, {{row.author.minimumUsers}}" popover-trigger="mouseenter" popover-title="author" popover-placement="top-left">paid</span>
+                <span ></span>
+              </td>
+              <td><span ng-show="row.windows" class="glyphicon glyphicon-ok"></span></td>
+              <td><span ng-show="row.linux" class="glyphicon glyphicon-ok"></span></td>
+              <td><span ng-show="row.macOS" class="glyphicon glyphicon-ok"></span></td>
+              <td>
+                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)"></i>
+                <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>
+              </td>
+            </tr>
+            <tr ng-switch-when="author" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
+              <td>{{row.firstName}}</td>
+              <td>{{row.lastName}}</td>
+              <td>{{row.email}}</td>
+              <td>{{row.birthday}}</td>
+              <td>
+                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)"></i>
+                <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <center>
+        <uib-pagination
+        total-items="main.totalElements"
+        ng-model="currentPage"
+        max-size="main.totalElements"
+        ng-change="loadPage(currentPage, name)"
+        class="pagination-sm">
+        </uib-pagination>
+        </center>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title" translate>filter</h3>
+      </div>
+      <div class="panel-body" ui-view="filter">
+        <!-- <div>
+          <label translate>name</label>
+          <input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1)" pattern="[A-z^\s]*">
+        </div> -->
+      </div>
+    </div>
+    <button class="btn btn-success full-width" ng-click="openAdd()"><i class="glyphicon glyphicon-plus"></i> <span translate>add</span></button>
+  </div>
+</div>

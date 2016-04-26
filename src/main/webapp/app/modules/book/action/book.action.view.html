@@ -1,0 +1,33 @@
+<div class="panel panel-default" ><!-- flow-init="target" -->
+<div class="panel-heading">
+  <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+  <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
+</div>
+<div class="panel-body">
+  <ng-form>
+  <div class="col-lg-12">
+    <label translate>nameBook</label>
+    <input id="nameBook" name="nameBook" type="name" class="form-control" ng-model="nameBook" maxlength="20">
+    <label translate>publisherYear</label>
+    <div class="input-group">
+      <input name="publisherYear" ng-model="publisherYear" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="publisherYearValue" readonly>
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+    <label translate>countPages</label>
+    <input name="countPages" type="number" class="form-control" ng-model="countPages" min="1">
+    <label translate>sizeFile</label>
+    <input name="sizeFile" type="number" class="form-control" ng-model="sizeFile" min="1">
+    <label translate>addressFileOnDisk</label>
+    <input id="addressFileOnDisk" name="addressFileOnDisk" type="name" class="form-control" ng-model="addressFileOnDisk">
+    <label translate>addressFileOnNet</label>
+    <input id="addressFileOnNet" name="addressFileOnNet" type="name" class="form-control" ng-model="addressFileOnNet">
+  </div>
+  </ng-form>
+  <div class="col-lg-12 tools">
+    <button type="submit" class="btn btn-primary" ng-click="save()" translate><i class="glyphicon glyphicon-floppy-disk"></i> save</button>
+    <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
+  </div>
+</div>
+</div>
