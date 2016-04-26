@@ -4,12 +4,12 @@
 	var main = angular.module('main', [
 		'book',
 		'author',
-		'software',
+		'publisher',
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
 		'ngAnimate',
-		'pascalprecht.translate',
+		'pascalprecht.translate', 
 		'base64',
 		'flow',
 		'ngDialog'

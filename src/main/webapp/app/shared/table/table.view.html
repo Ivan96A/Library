@@ -34,20 +34,12 @@
                 <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)" uib-tooltip="Remove"></i>
               </td>
             </tr>
-            <tr ng-switch-when="software" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
-              <td><a href="#/software/{{row.id}}">{{row.name}}</a></td>
-              <td>{{row.version}}</td>
-              <td>{{row.release}}</td>
-              <td>{{row.book.name}}</td>
-              <td ng-switch="row.author.type" >
-                <span ng-switch-when="FREE" class="label label-success" uib-popover="{{row.author.name}} {{row.author.priceForOne}}, {{row.author.minimumUsers}}" popover-trigger="mouseenter" popover-title="author" popover-placement="top-left">free</span>
-                <span ng-switch-when="TRIAL" class="label label-warning" uib-popover="{{row.author.name}}, {{row.author.priceForOne}}, {{row.author.minimumUsers}}" popover-trigger="mouseenter" popover-title="author" popover-placement="top-left">trial</span>
-                <span ng-switch-when="PAID" class="label label-primary" uib-popover="{{row.author.name}}, {{row.author.priceForOne}}, {{row.author.minimumUsers}}" popover-trigger="mouseenter" popover-title="author" popover-placement="top-left">paid</span>
-                <span ></span>
-              </td>
-              <td><span ng-show="row.windows" class="glyphicon glyphicon-ok"></span></td>
-              <td><span ng-show="row.linux" class="glyphicon glyphicon-ok"></span></td>
-              <td><span ng-show="row.macOS" class="glyphicon glyphicon-ok"></span></td>
+            <tr ng-switch-when="publisher" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
+              <td>{{row.name}}</td>
+              <td>{{row.email}}</td>
+              <td>{{row.officialSite}}</td>
+              <td>{{row.address}}</td>
+              <td>{{row.telephoneNumber}}</td>
               <td>
                 <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)"></i>
                 <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>

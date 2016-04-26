@@ -4,12 +4,12 @@
 	var main = angular.module('main', [
 		'book',
 		'author',
-		'software',
+		'publisher',
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
 		'ngAnimate',
-		'pascalprecht.translate',
+		'pascalprecht.translate', 
 		'base64',
 		'flow',
 		'ngDialog'
@@ -152,15 +152,6 @@
 				},
 				'filter@main.author.table': {
 					templateUrl: '/app/modules/author/filter/author.filter.view.html'
-				}
-			}
-		})
-		.state('main.author.profile', { 
-			url: '/:id',
-			views: {
-				'content@main.author': {
-					templateUrl: '/app/modules/author/profile/author.profile.view.html',
-					controller: 'AuthorProfileCtrl'
 				}
 			}
 		});
@@ -408,32 +399,29 @@
 
 	angular
 	.module('main')
-	.controller('SoftwareCtrl', SoftwareCtrl);
+	.controller('PublisherCtrl', PublisherCtrl);
 
-	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService, LicenseService, ngDialog) {
+	function PublisherCtrl ($scope, $state, PublisherService, ngDialog) {
 		var sc = $scope;
 		
-		sc.table = 'software';
+		sc.table = 'publisher';
 		sc.base = '/' + sc.table;
 
 		sc.tableHeader = 
 		[
 		'name', 
-		'version',
-		'release',
-		'developer',
-		'license',
-		'windows',
-		'linux',
-		'macOS'
+		'email',
+		'officialSite',
+		'address',
+		'telephoneNumber'
 		];
 
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
-				template: '/app/modules/software/action/software.action.view.html', 
+				template: '/app/modules/publisher/action/publisher.action.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'SoftwareEditCtrl',
+				controller: 'PublisherEditCtrl',
 				scope: $scope
 			});
 			sc.id = id;
@@ -441,10 +429,10 @@
 
 		sc.openAdd = function () {
 			ngDialog.open({ 
-				template: '/app/modules/software/action/software.action.view.html', 
+				template: '/app/modules/publisher/action/publisher.action.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'SoftwareNewCtrl',
+				controller: 'PublisherNewCtrl',
 				scope: $scope
 			});
 		};
@@ -452,10 +440,10 @@
 		sc.openDelete = function (id) {
 			sc.id = id; 
 			ngDialog.open({ 
-				template: '/app/modules/software/action/software.action.delete.view.html', 
+				template: '/app/modules/publisher/action/publisher.action.delete.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'SoftwareDeleteCtrl',
+				controller: 'PublisherDeleteCtrl',
 				scope: $scope
 			});
 		};
@@ -466,22 +454,11 @@
 				release = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 			}
 
-			SoftwareService.getPage(currentPage - 1, 10, name, release, devName, licName)
+			PublisherService.getPage(currentPage - 1, 10, name, release, devName, licName)
 			.success(function (data){
 				sc.main = data;
 			});
 		};
-
-		sc.devName = {};
-		sc.licName = {};
-
-		DeveloperService.getAll().success( function (data) {
-			sc.developers = data.content;
-		});
-
-		LicenseService.getAll().success( function (data) {
-			sc.licensies = data.content;
-		});
 
 		sc.loadPage(1); 
 	};
@@ -491,7 +468,7 @@
 (function () {
 	'use strict';
 
-	var software = angular.module('software', [
+	var publisher = angular.module('publisher', [
 		'ui.router'
 		])
 	.config(configure);
@@ -501,29 +478,20 @@
 	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
 
 		$stateProvider
-		.state('main.software', {
-			url: 'software',
+		.state('main.publisher', {
+			url: 'publisher',
 			abstract: true,
 			template: '<div ui-view="content"></div>'
 		})
-		.state('main.software.table', {
+		.state('main.publisher.table', {
 			url: '', 
 			views: {
-				'content@main.software': {
+				'content@main.publisher': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'SoftwareCtrl',
+					controller: 'PublisherCtrl',
 				},
-				'filter@main.software.table': {
-					templateUrl: '/app/modules/software/filter/software.filter.view.html'
-				}
-			}
-		})
-		.state('main.software.profile', { 
-			url: '/:id',
-			views: {
-				'content@main.software': {
-					templateUrl: '/app/modules/software/profile/software.profile.view.html',
-					controller: 'SoftwareProfileCtrl'
+				'filter@main.publisher.table': {
+					templateUrl: '/app/modules/publisher/filter/publisher.filter.view.html'
 				}
 			}
 		});
@@ -535,9 +503,9 @@
     'use strict';
 
     angular.module('main')
-    .service('SoftwareService', function ($http) {
+    .service('PublisherService', function ($http) {
 
-        var urlBase = '/soft';
+        var urlBase = '/publisher';
 
         this.getAll = function () {
             return $http.get(urlBase, { 
@@ -961,7 +929,10 @@
                 'countPages': sc.countPages,
                 'sizeFile': sc.sizeFile,
                 'addressFileOnDisk': sc.addressFileOnDisk,
-                'addressFileOnNet': sc.addressFileOnNet
+                'addressFileOnNet': sc.addressFileOnNet,
+                'author': {"id":1,"firstName":"Ivan","lastName":"Arabchuk","email":"ivan@mail.com","birthday":"1996-09-12"},
+                'publisher': {"id":1,"name":"Svitanok","email":"svit@mail.com","officialSite":"svit.com","address":"Kiyv","telephoneNumber":"09932423423"},
+                'typeFile': {}
             };
 
             if (sc.nameBook != '' 
@@ -1033,17 +1004,27 @@
 
 	angular
 	.module('main')
-	.controller('SoftwareDeleteCtrl', SoftwareDeleteCtrl);
+	.controller('PublisherDeleteCtrl', PublisherDeleteCtrl);
 
-	function SoftwareDeleteCtrl ($scope, $state, $location, SoftwareService) {
+	function PublisherDeleteCtrl ($scope, $state, $location, PublisherService) {
 		var sc = $scope;
 
+		var publisherName;
+
+		PublisherService.get(sc.id)
+	  		.success( function (data) {
+	  			publisherName = data.name;
+				sc.log = 'Are you sure you want to remove publisher ' + publisherName + '?';
+	  		});
+
 		sc.delete = function () {
-			SoftwareService.delete(sc.id)
-			.success(function (data) {
-				sc.loadPage(1);
+			PublisherService.delete(sc.id)
+			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-			});
+				sc.loadPage(1);
+			  }, function errorCallback(response) {
+			    	sc.log = 'Publisher "' + publisherName + '" could not be deleted because is in use yet';
+			  }); 
 		}
 	};
 })();
@@ -1053,63 +1034,46 @@
 
 	angular
 	.module('main')
-	.controller('SoftwareEditCtrl', SoftwareEditCtrl);
+	.controller('PublisherEditCtrl', PublisherEditCtrl);
 
-	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
+	function PublisherEditCtrl ($scope, $state, $location, PublisherService) {
 		var sc = $scope;
 
 		sc.action = 'Edit';
 
-		SoftwareService.get(sc.id)
+		PublisherService.get(sc.id)
 		.success(function (data) {
-			sc.software = data;
+			sc.publisher = data;
 
-			sc.id = sc.software.id;
-			sc.name = sc.software.name;
-			sc.version = sc.software.version;
-			sc.releaseValue = sc.software.release;
-			sc.license = sc.software.license;
-			sc.developer = sc.software.developer;
-			sc.windows = sc.software.windows;
-			sc.linux = sc.software.linux;
-			sc.macOS = sc.software.macOS;
-
-			sc.release = new Date(sc.software.release);
-
-			sc.selDeveloper = sc.software.developer;
-			sc.selLicense = sc.software.license;
-
-			DeveloperService.getAll().success( function (data) {
-				sc.developers = data.content;
-			});
-
-			LicenseService.getAll().success( function (data) {
-				sc.licensies = data.content;
-			});
+			sc.id = sc.publisher.id;
+			sc.name = sc.publisher.name;
+			sc.email = sc.publisher.email;
+			sc.officialSite = sc.publisher.officialSite;
+			sc.address = sc.publisher.address;
+			sc.telephoneNumber = sc.publisher.telephoneNumber;
 
 			sc.save = function () {
-				sc.soft = {
+				sc.publisher = {
 					'id': sc.id,
 					'name': sc.name,
-					'version': sc.version,
-					'release': sc.release.getFullYear() + '-' + (sc.release.getMonth() + 1) + '-' + sc.release.getDate(),
-					'license': sc.selLicense,
-					'developer': sc.selDeveloper,
-					'windows': sc.windows,
-					'linux': sc.linux,
-					'macOS': sc.macOS
+					'email': sc.email,
+					'officialSite': sc.officialSite,
+					'address': sc.address,
+					'telephoneNumber': sc.telephoneNumber
 				}
 
 
 			if (sc.name != '' 
-				&& sc.version != ''
-				&& sc.selDeveloper != {}
-				&& sc.selLicense != {}
+				&& sc.email != ''
+				&& sc.officialSite != ''
+				&& sc.address != ''
+				&& sc.telephoneNumber != ''
+				&& sc.publisherForm.$valid
 				) {
-					SoftwareService.update(sc.soft)
+					PublisherService.update(sc.publisher)
 					.success(function (data) {
 						sc.loadPage(1);
-						sc.soft = null;
+						sc.publisher = null;
 					});
 					sc.closeThisDialog(true);
 				}
@@ -1124,50 +1088,37 @@
 
 	angular
 	.module('main')
-	.controller('SoftwareNewCtrl', SoftwareNewCtrl);
+	.controller('PublisherNewCtrl', PublisherNewCtrl);
 
-	function SoftwareNewCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
+	function PublisherNewCtrl ($scope, $state, $location, PublisherService) {
 		var sc = $scope;
 
 		sc.action = 'Add';
 
 		sc.name = '';
-		sc.version = '';
-		sc.release = new Date();
-		sc.license = '';
-		sc.windows = false;
-		sc.linux = false;
-		sc.macOS = false;
-		sc.selDeveloper = '';
-		sc.selLicense = '';
-
-		DeveloperService.getAll().success( function (data) {
-			sc.developers = data.content;
-		});
-
-		LicenseService.getAll().success( function (data) {
-			sc.licensies = data.content;
-		});
+		sc.email = '';
+		sc.officialSite = '';
+		sc.address = '';
+		sc.telephoneNumber = '';
 
 		sc.save = function () {
 
 			sc.soft = {
 				'name': sc.name,
-				'version': sc.version,
-				'license': sc.selLicense,
-				'developer': sc.selDeveloper,
-				'release': sc.release.getFullYear() + '-' + sc.release.getMonth() + '-' + sc.release.getDate(),
-				'windows': sc.windows,
-				'linux': sc.linux,
-				'macOS': sc.macOS
+				'email': sc.email,
+				'officialSite': sc.officialSite,
+				'address': sc.address,
+				'telephoneNumber': sc.telephoneNumber
 			}
 
-		if (sc.name != '' 
-			&& sc.version != ''
-				&& sc.selLicense != ''
-				&& sc.selDeveloper != ''
+			if (sc.name != '' 
+				&& sc.email != ''
+				&& sc.officialSite != ''
+				&& sc.address != ''
+				&& sc.telephoneNumber != ''
+				&& sc.publisherForm.$valid
 				) {
-				SoftwareService.new(sc.soft)
+				PublisherService.new(sc.soft)
 				.success(function (data) {
 					sc.loadPage(1);
 					sc.soft = null;

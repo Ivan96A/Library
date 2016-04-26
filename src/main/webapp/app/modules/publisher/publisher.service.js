@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('main')
-    .service('SoftwareService', function ($http) {
+    .service('PublisherService', function ($http) {
 
-        var urlBase = '/soft';
+        var urlBase = '/publisher';
 
         this.getAll = function () {
             return $http.get(urlBase, { 

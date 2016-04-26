@@ -24,7 +24,10 @@
                 'countPages': sc.countPages,
                 'sizeFile': sc.sizeFile,
                 'addressFileOnDisk': sc.addressFileOnDisk,
-                'addressFileOnNet': sc.addressFileOnNet
+                'addressFileOnNet': sc.addressFileOnNet,
+                'author': {"id":1,"firstName":"Ivan","lastName":"Arabchuk","email":"ivan@mail.com","birthday":"1996-09-12"},
+                'publisher': {"id":1,"name":"Svitanok","email":"svit@mail.com","officialSite":"svit.com","address":"Kiyv","telephoneNumber":"09932423423"},
+                'typeFile': {}
             };
 
             if (sc.nameBook != '' 

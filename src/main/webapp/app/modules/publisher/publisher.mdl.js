@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	var author = angular.module('author', [
+	var publisher = angular.module('publisher', [
 		'ui.router'
 		])
 	.config(configure);
@@ -11,24 +11,23 @@
 	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
 
 		$stateProvider
-		.state('main.author', {
-			url: 'author',
+		.state('main.publisher', {
+			url: 'publisher',
 			abstract: true,
 			template: '<div ui-view="content"></div>'
 		})
-		.state('main.author.table', {
+		.state('main.publisher.table', {
 			url: '', 
 			views: {
-				'content@main.author': {
+				'content@main.publisher': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'AuthorCtrl',
+					controller: 'PublisherCtrl',
 				},
-				'filter@main.author.table': {
-					templateUrl: '/app/modules/author/filter/author.filter.view.html'
+				'filter@main.publisher.table': {
+					templateUrl: '/app/modules/publisher/filter/publisher.filter.view.html'
 				}
 			}
 		});
-
 	}
 
 })();

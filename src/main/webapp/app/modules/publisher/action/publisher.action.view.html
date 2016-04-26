@@ -1,0 +1,27 @@
+<div class="panel panel-default popup">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
+  </div>
+  <div class="panel-body">
+    <ng-form name="publisherForm">
+    <div class="col-lg-12">
+      <label translate>name</label>
+      <input name="name" type="text" class="form-control" ng-model="name" minlength="5">
+      <label translate>email</label>
+      <input name="email" type="email" class="form-control" ng-model="email" minlength="5">
+      <label translate>officialSite</label>
+      <input name="officialSite" type="text" class="form-control" ng-model="officialSite" minlength="5">
+      <label translate>address</label>
+      <input name="address" type="text" class="form-control" ng-model="address" minlength="5">
+      <label translate>telephoneNumber</label>
+      <input name="telephoneNumber" type="text" class="form-control" ng-model="telephoneNumber" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
+      uib-tooltip="Only numbers"  tooltip-is-open="hotelForm.telephoneNumber.$invalid" tooltip-trigger="none">
+    </div>
+    </ng-form>
+    <div class="col-lg-12 tools">
+      <button type="submit" class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+      <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
+    </div>
+  </div>
+</div>

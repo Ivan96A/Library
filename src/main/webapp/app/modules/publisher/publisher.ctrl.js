@@ -3,32 +3,29 @@
 
 	angular
 	.module('main')
-	.controller('SoftwareCtrl', SoftwareCtrl);
+	.controller('PublisherCtrl', PublisherCtrl);
 
-	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService, LicenseService, ngDialog) {
+	function PublisherCtrl ($scope, $state, PublisherService, ngDialog) {
 		var sc = $scope;
 		
-		sc.table = 'software';
+		sc.table = 'publisher';
 		sc.base = '/' + sc.table;
 
 		sc.tableHeader = 
 		[
 		'name', 
-		'version',
-		'release',
-		'developer',
-		'license',
-		'windows',
-		'linux',
-		'macOS'
+		'email',
+		'officialSite',
+		'address',
+		'telephoneNumber'
 		];
 
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
-				template: '/app/modules/software/action/software.action.view.html', 
+				template: '/app/modules/publisher/action/publisher.action.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'SoftwareEditCtrl',
+				controller: 'PublisherEditCtrl',
 				scope: $scope
 			});
 			sc.id = id;
@@ -36,10 +33,10 @@
 
 		sc.openAdd = function () {
 			ngDialog.open({ 
-				template: '/app/modules/software/action/software.action.view.html', 
+				template: '/app/modules/publisher/action/publisher.action.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'SoftwareNewCtrl',
+				controller: 'PublisherNewCtrl',
 				scope: $scope
 			});
 		};
@@ -47,10 +44,10 @@
 		sc.openDelete = function (id) {
 			sc.id = id; 
 			ngDialog.open({ 
-				template: '/app/modules/software/action/software.action.delete.view.html', 
+				template: '/app/modules/publisher/action/publisher.action.delete.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'SoftwareDeleteCtrl',
+				controller: 'PublisherDeleteCtrl',
 				scope: $scope
 			});
 		};
@@ -61,22 +58,11 @@
 				release = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 			}
 
-			SoftwareService.getPage(currentPage - 1, 10, name, release, devName, licName)
+			PublisherService.getPage(currentPage - 1, 10, name, release, devName, licName)
 			.success(function (data){
 				sc.main = data;
 			});
 		};
-
-		sc.devName = {};
-		sc.licName = {};
-
-		DeveloperService.getAll().success( function (data) {
-			sc.developers = data.content;
-		});
-
-		LicenseService.getAll().success( function (data) {
-			sc.licensies = data.content;
-		});
 
 		sc.loadPage(1); 
 	};
