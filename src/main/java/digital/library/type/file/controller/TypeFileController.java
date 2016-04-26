@@ -34,6 +34,14 @@ public class TypeFileController {
     }
 
     @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public TypeFile getOne(@PathVariable Long id) {
+        return typeFileService.findById(id);
+    }
+
+    @RequestMapping(
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)

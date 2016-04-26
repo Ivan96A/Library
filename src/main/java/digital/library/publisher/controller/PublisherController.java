@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
+
 /**
  * Created by Iwan on 05.04.2016.
  */
@@ -31,6 +33,14 @@ public class PublisherController {
             Page<Publisher> page = publisherService.getAll(pageable);
             return page;
         }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Publisher getOne(@PathVariable Long id) {
+        return publisherService.findById(id);
+    }
 
         @RequestMapping(
                 method = RequestMethod.POST,

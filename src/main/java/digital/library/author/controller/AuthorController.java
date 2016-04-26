@@ -27,7 +27,7 @@ public class AuthorController {
     private AuthorService authorService;
 
     @RequestMapping(
-            method  = RequestMethod.GET,
+            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Author> getAllAuthors(Pageable pageable) {
         Page<Author> page = authorService.getAllAuthors(pageable);
@@ -35,14 +35,21 @@ public class AuthorController {
     }
 
     @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Author getOne(@PathVariable Long id) {
+        return authorService.findById(id);
+    }
+
+    @RequestMapping(
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addAuthor(@RequestBody Author author) {
-        if((authorService.findByEmail(author.getEmail()) != null) || (authorService.findById(author.getId()) !=null)) {
+        if ((authorService.findByEmail(author.getEmail()) != null) || (authorService.findById(author.getId()) != null)) {
             LOGGER.warn("Author '{}' already in use!", author.getFirstName());
-        }
-        else {
+        } else {
             LOGGER.warn("Author '{}' has been added!", author.getFirstName());
             authorService.saveAuthor(author);
 
@@ -55,7 +62,7 @@ public class AuthorController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateAuthor(@RequestBody Author author) {
         Author existingAuthor = authorService.findById(author.getId());
-        if(existingAuthor != null && !existingAuthor.getId().equals(author.getId())) {
+        if (existingAuthor != null && !existingAuthor.getId().equals(author.getId())) {
             LOGGER.warn("error updating ");
         }
         authorService.saveAuthor(author);
