@@ -5,16 +5,32 @@
 	.module('main')
 	.controller('PublisherNewCtrl', PublisherNewCtrl);
 
-	function PublisherNewCtrl ($scope, $state, $location, PublisherService) {
+	function PublisherNewCtrl ($scope, $state, $location, $sce, PublisherService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
 
+		sc.formValid = false;
+ 
 		sc.name = '';
 		sc.email = '';
 		sc.officialSite = '';
 		sc.address = '';
 		sc.telephoneNumber = '';
+
+		sc.checkForm = function () {
+			if (sc.name != '' 
+				&& sc.email != ''
+				&& sc.officialSite != ''
+				&& sc.address != ''
+				&& sc.telephoneNumber != ''
+				&& sc.publisherForm.$valid
+				) {
+					sc.formValid = true;
+				}
+			else sc.formValid = false;
+
+		}
 
 		sc.save = function () {
 
@@ -26,21 +42,13 @@
 				'telephoneNumber': sc.telephoneNumber
 			}
 
-			if (sc.name != '' 
-				&& sc.email != ''
-				&& sc.officialSite != ''
-				&& sc.address != ''
-				&& sc.telephoneNumber != ''
-				&& sc.publisherForm.$valid
-				) {
-				PublisherService.new(sc.soft)
-				.success(function (data) {
-					sc.loadPage(1);
-					sc.soft = null;
-					sc.closeThisDialog(true);
-				});
-			}
-			else alert('Error');
-		}
+
+			PublisherService.new(sc.soft)
+			.success(function (data) {
+				sc.loadPage(1);
+				sc.soft = null;
+				sc.closeThisDialog(true);
+			});
+		}	
 	}
 })();

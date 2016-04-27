@@ -8,11 +8,13 @@
 	function PublisherEditCtrl ($scope, $state, $location, PublisherService) {
 		var sc = $scope;
 
-		sc.action = 'Edit';
+		sc.action = 'edit';
 
 		PublisherService.get(sc.id)
 		.success(function (data) {
 			sc.publisher = data;
+
+			sc.formValid = false;
 
 			sc.id = sc.publisher.id;
 			sc.name = sc.publisher.name;
@@ -20,6 +22,19 @@
 			sc.officialSite = sc.publisher.officialSite;
 			sc.address = sc.publisher.address;
 			sc.telephoneNumber = sc.publisher.telephoneNumber;
+
+			sc.checkForm = function () {
+				if (sc.name != '' 
+					&& sc.email != ''
+					&& sc.officialSite != ''
+					&& sc.address != ''
+					&& sc.telephoneNumber != ''
+					&& sc.publisherForm.$valid
+					) {
+						sc.formValid = true;
+					}
+				else sc.formValid = false;
+			}
 
 			sc.save = function () {
 				sc.publisher = {
@@ -31,22 +46,12 @@
 					'telephoneNumber': sc.telephoneNumber
 				}
 
-
-			if (sc.name != '' 
-				&& sc.email != ''
-				&& sc.officialSite != ''
-				&& sc.address != ''
-				&& sc.telephoneNumber != ''
-				&& sc.publisherForm.$valid
-				) {
-					PublisherService.update(sc.publisher)
-					.success(function (data) {
-						sc.loadPage(1);
-						sc.publisher = null;
-					});
-					sc.closeThisDialog(true);
-				}
-			else alert('Error');
+				PublisherService.update(sc.publisher)
+				.success(function (data) {
+					sc.loadPage(1);
+					sc.publisher = null;
+				});
+				sc.closeThisDialog(true);
 			}
 		});
 	}

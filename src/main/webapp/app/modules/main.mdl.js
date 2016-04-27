@@ -49,6 +49,6 @@
 	}
 
 	function run($translate, $rootScope, $templateCache) {
-		// $translate.use('en');
+		$translate.use('uk');
 	}
 })();

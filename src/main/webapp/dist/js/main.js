@@ -49,7 +49,7 @@
 	}
 
 	function run($translate, $rootScope, $templateCache) {
-		// $translate.use('en');
+		$translate.use('uk');
 	}
 })();
 
@@ -734,6 +734,7 @@
 	function AuthorEditCtrl ($scope, $state, $location, AuthorService) {
 		var sc = $scope;
 		sc.action = 'edit';
+		sc.formValid = false;
 
 		AuthorService.get(sc.id)
 		.success(function (data) {
@@ -745,6 +746,18 @@
 			sc.email = sc.author.email;
 			sc.birthday = new Date(sc.author.birthday);
 
+			sc.checkForm = function () {
+				if (sc.firstName != '' 
+					&& sc.lastName != ''
+					&& sc.email != ''
+					&& sc.birthday != ''
+					&& sc.authorForm.$valid
+					) {
+					sc.formValid = true;
+				}
+				else sc.formValid = false;
+			}
+
 			sc.save = function () {
 				sc.author = {
 					'id': sc.id,
@@ -754,20 +767,13 @@
 					'birthday': sc.birthday.getFullYear() + '-' + sc.birthday.getMonth() + '-' + sc.birthday.getDate()
 				}
 
-				if (sc.firstName != '' 
-					&& sc.lastName != ''
-					&& sc.email != ''
-					&& sc.birthday != ''
-					&& sc.authorForm.$valid
-				) {
-					AuthorService.update(sc.author)
-					.success(function (data) {
-						sc.author = null;
-						sc.closeThisDialog(true);
-						sc.loadPage(1);
-					});
-				}
-				else alert('Error');
+				AuthorService.update(sc.author)
+				.success(function (data) {
+					sc.author = null;
+					sc.closeThisDialog(true);
+					sc.loadPage(1);
+				});
+				
 			}
 		});
 	}
@@ -783,13 +789,26 @@
 	function AuthorNewCtrl ($scope, $state, $location, AuthorService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
+		sc.formValid = false;
 
 		sc.firstName = '';
 		sc.lastName = '';
 		sc.email = '';
 		sc.birthday = new Date();
-		
+
+		sc.checkForm = function () {
+			if (sc.firstName != '' 
+				&& sc.lastName != ''
+				&& sc.email != ''
+				&& sc.birthday != ''
+				&& sc.authorForm.$valid
+				) {
+				sc.formValid = true;
+			}
+			else sc.formValid = false;
+		}
+
 		sc.save = function () {
 			sc.author = {
 				'firstName': sc.firstName,
@@ -798,20 +817,12 @@
 				'birthday': sc.birthday.getFullYear() + '-' + sc.birthday.getMonth() + '-' + sc.birthday.getDate()
 			}
 
-			if (sc.firstName != '' 
-				&& sc.lastName != ''
-				&& sc.email != ''
-				&& sc.birthday != ''
-				&& sc.authorForm.$valid
-				) {
-				AuthorService.new(sc.author)
-				.success(function (data) {
-					sc.author = null;
-					sc.closeThisDialog(true);
-					sc.loadPage(1);
-				});
-			}
-			else alert('Error');
+			AuthorService.new(sc.author)
+			.success(function (data) {
+				sc.author = null;
+				sc.closeThisDialog(true);
+				sc.loadPage(1);
+			});
 		}
 	};
 })();
@@ -1039,11 +1050,13 @@
 	function PublisherEditCtrl ($scope, $state, $location, PublisherService) {
 		var sc = $scope;
 
-		sc.action = 'Edit';
+		sc.action = 'edit';
 
 		PublisherService.get(sc.id)
 		.success(function (data) {
 			sc.publisher = data;
+
+			sc.formValid = false;
 
 			sc.id = sc.publisher.id;
 			sc.name = sc.publisher.name;
@@ -1051,6 +1064,19 @@
 			sc.officialSite = sc.publisher.officialSite;
 			sc.address = sc.publisher.address;
 			sc.telephoneNumber = sc.publisher.telephoneNumber;
+
+			sc.checkForm = function () {
+				if (sc.name != '' 
+					&& sc.email != ''
+					&& sc.officialSite != ''
+					&& sc.address != ''
+					&& sc.telephoneNumber != ''
+					&& sc.publisherForm.$valid
+					) {
+						sc.formValid = true;
+					}
+				else sc.formValid = false;
+			}
 
 			sc.save = function () {
 				sc.publisher = {
@@ -1062,22 +1088,12 @@
 					'telephoneNumber': sc.telephoneNumber
 				}
 
-
-			if (sc.name != '' 
-				&& sc.email != ''
-				&& sc.officialSite != ''
-				&& sc.address != ''
-				&& sc.telephoneNumber != ''
-				&& sc.publisherForm.$valid
-				) {
-					PublisherService.update(sc.publisher)
-					.success(function (data) {
-						sc.loadPage(1);
-						sc.publisher = null;
-					});
-					sc.closeThisDialog(true);
-				}
-			else alert('Error');
+				PublisherService.update(sc.publisher)
+				.success(function (data) {
+					sc.loadPage(1);
+					sc.publisher = null;
+				});
+				sc.closeThisDialog(true);
 			}
 		});
 	}
@@ -1090,16 +1106,32 @@
 	.module('main')
 	.controller('PublisherNewCtrl', PublisherNewCtrl);
 
-	function PublisherNewCtrl ($scope, $state, $location, PublisherService) {
+	function PublisherNewCtrl ($scope, $state, $location, $sce, PublisherService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
 
+		sc.formValid = false;
+ 
 		sc.name = '';
 		sc.email = '';
 		sc.officialSite = '';
 		sc.address = '';
 		sc.telephoneNumber = '';
+
+		sc.checkForm = function () {
+			if (sc.name != '' 
+				&& sc.email != ''
+				&& sc.officialSite != ''
+				&& sc.address != ''
+				&& sc.telephoneNumber != ''
+				&& sc.publisherForm.$valid
+				) {
+					sc.formValid = true;
+				}
+			else sc.formValid = false;
+
+		}
 
 		sc.save = function () {
 
@@ -1111,22 +1143,14 @@
 				'telephoneNumber': sc.telephoneNumber
 			}
 
-			if (sc.name != '' 
-				&& sc.email != ''
-				&& sc.officialSite != ''
-				&& sc.address != ''
-				&& sc.telephoneNumber != ''
-				&& sc.publisherForm.$valid
-				) {
-				PublisherService.new(sc.soft)
-				.success(function (data) {
-					sc.loadPage(1);
-					sc.soft = null;
-					sc.closeThisDialog(true);
-				});
-			}
-			else alert('Error');
-		}
+
+			PublisherService.new(sc.soft)
+			.success(function (data) {
+				sc.loadPage(1);
+				sc.soft = null;
+				sc.closeThisDialog(true);
+			});
+		}	
 	}
 })();
 

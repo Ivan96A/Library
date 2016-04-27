@@ -8,6 +8,7 @@
 	function AuthorEditCtrl ($scope, $state, $location, AuthorService) {
 		var sc = $scope;
 		sc.action = 'edit';
+		sc.formValid = false;
 
 		AuthorService.get(sc.id)
 		.success(function (data) {
@@ -19,6 +20,18 @@
 			sc.email = sc.author.email;
 			sc.birthday = new Date(sc.author.birthday);
 
+			sc.checkForm = function () {
+				if (sc.firstName != '' 
+					&& sc.lastName != ''
+					&& sc.email != ''
+					&& sc.birthday != ''
+					&& sc.authorForm.$valid
+					) {
+					sc.formValid = true;
+				}
+				else sc.formValid = false;
+			}
+
 			sc.save = function () {
 				sc.author = {
 					'id': sc.id,
@@ -28,20 +41,13 @@
 					'birthday': sc.birthday.getFullYear() + '-' + sc.birthday.getMonth() + '-' + sc.birthday.getDate()
 				}
 
-				if (sc.firstName != '' 
-					&& sc.lastName != ''
-					&& sc.email != ''
-					&& sc.birthday != ''
-					&& sc.authorForm.$valid
-				) {
-					AuthorService.update(sc.author)
-					.success(function (data) {
-						sc.author = null;
-						sc.closeThisDialog(true);
-						sc.loadPage(1);
-					});
-				}
-				else alert('Error');
+				AuthorService.update(sc.author)
+				.success(function (data) {
+					sc.author = null;
+					sc.closeThisDialog(true);
+					sc.loadPage(1);
+				});
+				
 			}
 		});
 	}
