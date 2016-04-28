@@ -21,15 +21,15 @@ public class TypeFile implements Serializable {
         WORD("WORD"),
         DJVU("DJVU");
 
-        private final String type;
+        private final String bookType;
 
-        BookType(String type) {
-            this.type = type;
+        BookType(String bookType) {
+            this.bookType = bookType;
         }
 
         @Override
         public String toString() {
-            return type;
+            return bookType;
         }
     }
 

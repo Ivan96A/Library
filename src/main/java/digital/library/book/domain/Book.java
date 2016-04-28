@@ -63,15 +63,52 @@ public class Book implements Serializable {
 
     }
 
-    public Book(String name, Publisher publisher, Author author, TypeFile typeFile, Date publisherYear, Long countPages, Long sizeFile) {
+    public Book(String name
+            , Date publisherYear
+            , Long countPages
+            , Long sizeFile
+            , String addressFileOnDisk
+            , String addressFileOnNet
+            , Publisher publisher
+            , Author author
+            , TypeFile typeFile) {
         this.name = name;
         this.publisherYear = publisherYear;
         this.countPages = countPages;
         this.sizeFile = sizeFile;
+        this.addressFileOnDisk = addressFileOnDisk;
+        this.addressFileOnNet = addressFileOnNet;
+        this.publisher = publisher;
+        this.author = author;
+        this.typeFile = typeFile;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public TypeFile getTypeFile() {
+        return typeFile;
+    }
+
+    public void setTypeFile(TypeFile typeFile) {
+        this.typeFile = typeFile;
     }
 
     public void setId(Long id) {

@@ -67,13 +67,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> findAllByPublisher(Pageable pageable, String name) {
-        return bookRepository.findAllByPublisher(pageable, name);
-    }
+    public Page<Book> findAllByPublisherAndAuthor(Pageable pageable, String publisherName, String authorName) {
+        if(publisherName == null || publisherName.equals("")) publisherName = "%";
+        else publisherName += "%";
+        if(authorName == null || authorName.equals("")) authorName = "%";
+        else authorName += "%";
 
-    @Override
-    public Page<Book> findAllByAuthor(Pageable pageable, String name) {
-        return bookRepository.findAllByAuthor(pageable, name);
+        return bookRepository.findAllByPublisherAndAuthor(pageable,publisherName, authorName);
     }
 
     private Image getImage(MultipartFile image) throws IOException {

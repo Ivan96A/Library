@@ -30,8 +30,8 @@ public class BookController {
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Book> getAllBook(Pageable pageable) {
-        return bookService.getAll(pageable);
+    public Page<Book> getAllBook(Pageable pageable, String publisherName, String authorName) {
+        return bookService.findAllByPublisherAndAuthor(pageable, publisherName, authorName);
     }
 
     @RequestMapping(
@@ -72,23 +72,6 @@ public class BookController {
         Book book = bookService.findById(id);
         bookService.delete(book);
     }
-
-    @RequestMapping(
-            value = "/searchByPublisher",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Book> findAllByPublisher(Pageable pageable, @RequestParam("name") String name) {
-        return bookService.findAllByPublisher(pageable, name);
-    }
-
-    @RequestMapping(
-            value = "/searchByAuthor",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Book> findAllByAuthor(Pageable pageable, @RequestParam("name") String name) {
-        return bookService.findAllByAuthor(pageable, name);
-    }
-
 
     @RequestMapping(
             value = "/image",

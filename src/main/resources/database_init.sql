@@ -20,12 +20,12 @@ insert into authors(first_name, last_name, email, birthday)
   insert into publishers(name, email, official_site, address, telephone_number)
   values('KDD', 'kdd@mail.com', 'kdd.com', 'Kiyv', '0995754646545');
 
-  /*insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
-  VALUE(0, 'pdf Reader', 'pdf.com');
   insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
-  VALUE(1, 'word Reader', 'reader.com');
+  VALUEs(0, 'pdf Reader', 'pdf.com');
+  insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
+  VALUEs(1, 'word Reader', 'reader.com');
  insert into type_files(type_name, name_program_for_open_book, web_site_for_download)
-  VALUE(2, 'djvu Reader', 'djvu.com');*/
+  VALUEs(2, 'djvu Reader', 'djvu.com');
 
 insert into images(image)
 values('Zm90by5qcGc=');
@@ -33,10 +33,14 @@ values('Zm90by5qcGc=');
 insert into images(image)
 values('Zm90bzIuanBn');
 
-/*insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net, publishers_id, image_id)
-  values('king Doom', '2014-09-14', 234, 45, 'C:/sdf', 'book.com', 1);
-insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net, image_id)
-  values('Spiderman', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 2);*/
+insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net, publishers_id, authors_id, type_files_id, image_id)
+  values('king Doom', '2014-09-14', 234, 45, 'C:/sdf', 'book.com', 1, 1, 3, 2);
+insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net,  publishers_id, authors_id, type_files_id, image_id)
+  values('Spiderman', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 2, 3, 2, 1);
+  insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net, publishers_id, authors_id, type_files_id, image_id)
+  values('book3', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 3, 1, 1, 1);
+  insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net,  publishers_id, authors_id, type_files_id, image_id)
+  values('book4', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 2, 3, 2, 1);
 
 
 
