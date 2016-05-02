@@ -39,4 +39,11 @@ public class PublisherServiceImpl implements PublisherService {
         publisherRepository.delete(publisher);
     }
 
+    @Override
+    public Page<Publisher> findByName(Pageable pageable, String name) {
+        if(name == null || name.equals("")) name = "%";
+        else name += "%";
+
+        return publisherRepository.findByName(pageable, name);
+    }
 }

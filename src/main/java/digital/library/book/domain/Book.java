@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import digital.library.author.domain.Author;
 import digital.library.image.domain.Image;
 import digital.library.publisher.domain.Publisher;
-import digital.library.type.file.domain.TypeFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -18,6 +17,23 @@ import java.sql.Date;
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
+
+    public enum TypeFile {
+        PDF( "PDF" ),
+        WORD( "WORD" ),
+        DJVU( "DJVU" );
+
+        private final String typeFile;
+
+        TypeFile( String typeFile ) {
+            this.typeFile = typeFile;
+        }
+
+        @Override
+        public String toString() {
+            return typeFile;
+        }
+    }
 
     @Id
     @Column(name = "id")
@@ -43,6 +59,9 @@ public class Book implements Serializable {
     @Column(name = "addressFileOnNet")
     private String addressFileOnNet;
 
+    @Column(name = "typeFile")
+    private TypeFile typeFile;
+
     @ManyToOne
     @JoinColumn(name = "publishersId", nullable = false)
     private Publisher publisher;
@@ -51,9 +70,6 @@ public class Book implements Serializable {
     @JoinColumn(name = "authorsId", nullable = false)
     private Author author;
 
-    @ManyToOne
-    @JoinColumn(name = "typeFilesId", nullable = false)
-    private TypeFile typeFile;
 
     @JsonIgnore
     @OneToOne
@@ -71,7 +87,7 @@ public class Book implements Serializable {
             , String addressFileOnNet
             , Publisher publisher
             , Author author
-            , TypeFile typeFile) {
+           ) {
         this.name = name;
         this.publisherYear = publisherYear;
         this.countPages = countPages;
@@ -80,7 +96,6 @@ public class Book implements Serializable {
         this.addressFileOnNet = addressFileOnNet;
         this.publisher = publisher;
         this.author = author;
-        this.typeFile = typeFile;
     }
 
     public Long getId() {
@@ -101,14 +116,6 @@ public class Book implements Serializable {
 
     public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public TypeFile getTypeFile() {
-        return typeFile;
-    }
-
-    public void setTypeFile(TypeFile typeFile) {
-        this.typeFile = typeFile;
     }
 
     public void setId(Long id) {

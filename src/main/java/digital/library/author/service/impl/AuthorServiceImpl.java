@@ -43,4 +43,12 @@ public class AuthorServiceImpl implements AuthorService {
         authorsRepository.delete(author);
 
     }
+
+    @Override
+    public Page<Author> findByFirstName(Pageable pageable, String name) {
+        if(name == null || name.equals("")) name = "%";
+        else name += "%";
+
+        return authorsRepository.findByFirstName(pageable, name);
+    }
 }

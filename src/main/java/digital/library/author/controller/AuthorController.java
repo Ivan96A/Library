@@ -29,9 +29,8 @@ public class AuthorController {
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Author> getAllAuthors(Pageable pageable) {
-        Page<Author> page = authorService.getAllAuthors(pageable);
-        return page;
+    public Page<Author> getAllAuthors(Pageable pageable, String name) {
+        return authorService.findByFirstName(pageable, name);
     }
 
     @RequestMapping(

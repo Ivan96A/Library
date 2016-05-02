@@ -10,11 +10,12 @@ import org.springframework.data.repository.query.Param;
 /**
  * Created by Iwan on 11.03.2016.
  */
-public interface BookRepository extends JpaRepository<Book, Long>{
+public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query("Select b from Book b where upper(b.publisher.name) like upper(:publisherName) and upper(b.author.firstName) like upper(:authorFirstName)")
+    @Query("Select b from Book b where upper(b.name) like upper(:name) and upper(b.publisher.name) like upper(:publisherName) and upper(b.author.firstName) like upper(:authorFirstName)")
     Page<Book> findAllByPublisherAndAuthor(Pageable pageable,
-                                  @Param("publisherName") String pName,
-                                  @Param("authorFirstName") String aName);
+                                           @Param("name") String name,
+                                           @Param("publisherName") String pName,
+                                           @Param("authorFirstName") String aName);
 
 }

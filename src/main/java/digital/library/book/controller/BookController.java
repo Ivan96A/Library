@@ -30,8 +30,8 @@ public class BookController {
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Book> getAllBook(Pageable pageable, String publisherName, String authorName) {
-        return bookService.findAllByPublisherAndAuthor(pageable, publisherName, authorName);
+    public Page<Book> get(Pageable pageable, String publisherName, String authorName, String name) {
+        return bookService.findAllByBookNameAndPublisherAndAuthor(pageable,name, publisherName, authorName);
     }
 
     @RequestMapping(

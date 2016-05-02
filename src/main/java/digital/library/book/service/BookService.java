@@ -22,6 +22,6 @@ public interface BookService {
 
     void deleteImage(Long imageId);
 
-    Page<Book> findAllByPublisherAndAuthor(Pageable pageable, String publisherName, String authorName);
+    Page<Book> findAllByBookNameAndPublisherAndAuthor(Pageable pageable, String bookName, String publisherName, String authorName);
 
 }

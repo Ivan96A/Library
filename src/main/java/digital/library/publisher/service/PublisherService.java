@@ -17,4 +17,6 @@ public interface PublisherService {
     void save(Publisher publisher);
 
     void delete(Publisher publisher);
+
+    Page<Publisher> findByName(Pageable pageable, String name);
 }

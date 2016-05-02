@@ -18,4 +18,6 @@ public interface AuthorService {
     void saveAuthor(Author author);
 
     void deleteAuthor(Author author);
+
+    Page<Author> findByFirstName(Pageable pageable, String name);
 }

@@ -29,9 +29,8 @@ public class PublisherController {
         @RequestMapping(
                 method = RequestMethod.GET,
                 produces = MediaType.APPLICATION_JSON_VALUE)
-        public Page<Publisher> getAllPublisher(Pageable pageable) {
-            Page<Publisher> page = publisherService.getAll(pageable);
-            return page;
+        public Page<Publisher> get(Pageable pageable, String name) {
+            return publisherService.findByName(pageable, name);
         }
 
     @RequestMapping(
