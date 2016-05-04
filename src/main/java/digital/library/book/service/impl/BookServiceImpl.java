@@ -85,16 +85,4 @@ public class BookServiceImpl implements BookService {
         return new Image(img);
     }
 
-    private Image decodeImages(Image image) {
-        Image decodedImage = null;
-        byte[] decodeFromString = Base64Utils.decodeFromString(image.getImageString());
-        Image i = new Image();
-        i.setImage(decodeFromString);
-        i.setId(image.getId());
-
-        return i;
-    }
-
-
-
 }
