@@ -59,7 +59,7 @@
         }
 
         this.getLogo = function (id) {
-            return $http.get(urlBase + '/logo', { 
+            return $http.get(urlBase + '/image', { 
                     params: { 
                         id: id
                     }

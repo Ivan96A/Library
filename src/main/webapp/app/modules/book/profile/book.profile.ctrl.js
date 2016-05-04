@@ -12,7 +12,7 @@
 		sc.id = $stateParams.id;
 
 		sc.target = { 
-				target: '/book/logo?id=' + $stateParams.id,
+				target: '/book/image?id=' + $stateParams.id,
 				testChunks: false,
 				singleFile: true
 			};
@@ -25,8 +25,7 @@
 	  	sc.getLogoById = function (id) {
 	  		BookService.getLogo(id)
 	  		.success( function (data) {
-	  			sc.devLogo = '';
-	  			sc.devLogo = data;
+	  			sc.bookImage = data;
 	  		});
 	  	}
 

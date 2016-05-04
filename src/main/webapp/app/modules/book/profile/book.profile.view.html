@@ -19,13 +19,13 @@
         <div class="col-lg-6">
           <div
             flow-init="target"
-            flow-file-added="$file.size < 2000000"
+            flow-file-added="$file.size < 512000"
             flow-file-success="getLogoById(id); $flow.files[0].cancel();"
             flow-drop>
             <div ng-init="imageUploadShow = false"
               ng-mouseover="imageUploadShow = true"
               ng-mouseleave="imageUploadShow = false">
-              <img class="logo" ng-if="$flow.files[0] == null" class="avatar" ng-src="data:image/png;base64, {{devLogo.logo}}" onerror="this.src = '/dist/img/no_image.gif'">
+              <img class="logo" ng-if="$flow.files[0] == null" class="avatar" ng-src="data:image/png;base64, {{bookImage}}" onerror="this.src = '/dist/img/no_image.gif'">
               <div ng-if="$flow.files[0] != null">
                 <uib-progressbar id="ownerProgressUpload" class="progress" value="$flow.files[0].progress() * 100" type="primary"></uib-progressbar>
                 <img class="logo" flow-img="$flow.files[0]" width="100%">
@@ -33,11 +33,11 @@
               </div>
               <div ng-show="imageUploadShow" class="owner-image-upload full-width show-hide" flow-btn>
                 <center>
-                  <div>
-                    <i class="glyphicon glyphicon-arrow-up"></i>
-                    <span ng-if="devLogo.logo != 'null'" translate>change</span>
-                    <span ng-if="devLogo.logo == 'null'" translate>add</span>
-                  </div>
+                <div>
+                  <i class="glyphicon glyphicon-arrow-up"></i>
+                  <span ng-if="devLogo.logo != 'null'" translate>change</span>
+                  <span ng-if="devLogo.logo == 'null'" translate>add</span>
+                </div>
                 </center>
               </div>
             </div>
@@ -51,28 +51,36 @@
                 <td translate>name</td><td><b>{{profile.name}}</b></td>
               </tr>
               <tr>
-                <td translate>city</td><td><b>{{profile.city}}</b></td>
+                <td translate>publisherYear</td><td><b>{{profile.publisherYear}}</b></td>
               </tr>
               <tr>
-                <td translate>street</td><td><b>{{profile.street}}</b></td>
+                <td translate>countPages</td><td><b>{{profile.countPages}}</b></td>
               </tr>
               <tr>
-                <td translate>zipcode</td><td><b>{{profile.zipcode}}</b></td>
+                <td translate>sizeFile</td><td><b>{{profile.sizeFile}}</b></td>
               </tr>
               <tr>
-                <td translate>country</td><td><b>{{profile.country}}</b></td>
+                <td translate>addressFileOnDisk</td><td><b>{{profile.addressFileOnDisk}}</b></td>
               </tr>
               <tr>
-                <td translate>email</td><td><b>{{profile.email}}</b></td>
+                <td translate>addressFileOnNet</td><td><b>{{profile.addressFileOnNet}}</b></td>
               </tr>
               <tr>
-                <td translate>website</td><td><b>{{profile.website}}</b></td>
+                <td translate>addressFileOnNet</td><td><b>{{profile.addressFileOnNet}}</b></td>
               </tr>
               <tr>
-                <td translate>phoneNumber</td><td><b>{{profile.phoneNumber | phone}}</b></td>
+                <td translate>author</td>
+                <td><b><a 
+                  uib-popover="{{profile.author.email}}, {{profile.author.birthday}}" popover-trigger="mouseenter" popover-title="{{profile.author.firstName}} {{profile.author.lastName}}"
+                  href="#/author/{{profile.author.id}}">{{profile.author.firstName}} {{profile.author.lastName}}</b></a>
+              </td>
               </tr>
               <tr>
-                <td translate>fax</td><td><b>{{profile.fax}}</b></td>
+                <td translate>publisher</td>
+                <td><b><span 
+                  uib-popover="{{profile.publisher.email}}, {{profile.publisher.officialSite}}, {{profile.publisher.address}}, {{profile.publisher.telephoneNumber}}" popover-trigger="mouseenter" popover-title="{{profile.publisher.name}}"
+                  href="#/publisher/{{profile.publisher.id}}">{{profile.publisher.name}}</b></span>
+              </td>
               </tr>
             </table>
           </div>
