@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
         Image img = null;
         Book book = bookRepository.findOne(id);
         try {
-            img = encode(image);
+            img.setImageString(Base64Utils.encodeToString(image.getBytes()));
             book.setImage(img);
             bookRepository.saveAndFlush(book);
         } catch (IOException e) {
