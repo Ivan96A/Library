@@ -35,11 +35,12 @@
                 }); 
         };
 
-        this.getPage = function (page, size, publisherName, authorName) {
+        this.getPage = function (page, size, name, publisherName, authorName) {
             return $http.get(urlBase, { 
                     params: { 
                         publisherName: publisherName,
                         authorName: authorName,
+                        name: name,
                         page: page, 
                         size: size 
                     }

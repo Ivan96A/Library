@@ -5,7 +5,7 @@
     .module('main')
     .controller('BookNewCtrl', BookNewCtrl);
 
-    function BookNewCtrl($scope, $state, $location, $document, BookService) {
+    function BookNewCtrl($scope, $state, $location, $document, BookService, AuthorService, PublisherService) {
         var sc = $scope;
 
         sc.action = 'add';
@@ -16,6 +16,32 @@
         sc.sizeFile = '';
         sc.addressFileOnDisk = '';
         sc.addressFileOnNet = '';
+        sc.selAuthor = '';
+        sc.selPublisher = '';
+
+        AuthorService.getAll().success( function (data) {
+            sc.authors = data.content;
+        });
+
+        PublisherService.getAll().success( function (data) {
+            sc.publishers = data.content;
+        });
+
+        sc.checkForm = function () {
+            if (sc.name != ''
+                && sc.publisherYear != '' 
+                && sc.countPages != '' 
+                && sc.sizeFile != '' 
+                && sc.addressFileOnDisk != '' 
+                && sc.addressFileOnNet != '' 
+                && sc.selAuthor != '' 
+                && sc.selPublisher != '' 
+                && sc.bookForm.$valid
+                ) {
+                sc.formValid = true;
+            }
+            else sc.formValid = false;
+        }
 
         sc.save = function() {
             sc.developer = {
@@ -25,24 +51,16 @@
                 'sizeFile': sc.sizeFile,
                 'addressFileOnDisk': sc.addressFileOnDisk,
                 'addressFileOnNet': sc.addressFileOnNet,
-                'author': {"id":1,"firstName":"Ivan","lastName":"Arabchuk","email":"ivan@mail.com","birthday":"1996-09-12"},
-                'publisher': {"id":1,"name":"Svitanok","email":"svit@mail.com","officialSite":"svit.com","address":"Kiyv","telephoneNumber":"09932423423"},
+                'author': sc.selAuthor,
+                'publisher': sc.selPublisher,
                 'typeFile': {}
             };
 
-            if (sc.name != ''
-            	&& sc.publisherYear != '' 
-            	&& sc.countPages != '' 
-            	&& sc.sizeFile != '' 
-            	&& sc.addressFileOnDisk != '' 
-            	&& sc.addressFileOnNet != '' 
-            ) {
-                BookService.new(sc.developer)
+            if (sc.formValid) BookService.new(sc.developer)
 					.success(function() {
 					    sc.closeThisDialog(true);
-					    sc.loadPage(1);
+					    sc.loadPage(sc.currentPage);
 					});
-            } else alert('Error');
         };
 
     };

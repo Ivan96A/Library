@@ -4,37 +4,39 @@
   <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
 </div>
 <div class="panel-body">
-  <ng-form>
-  <div class="col-lg-12">
+  <ng-form name="bookForm">
+  <div class="col-lg-6">
     <label translate>nameBook</label>
-    <input id="name" name="name" type="name" class="form-control" ng-model="name" maxlength="20">
+    <input id="name" name="name" type="name" class="form-control" ng-model="name" minlength="5" ng-change="checkForm()">
     <label translate>publisherYear</label>
     <div class="input-group">
-      <input name="publisherYear" ng-model="publisherYear" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="publisherYearValue" readonly>
+      <input name="publisherYear" ng-model="publisherYear" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="publisherYearValue" readonly ng-change="checkForm()">
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
     </div>
     <label translate>countPages</label>
-    <input name="countPages" type="number" class="form-control" ng-model="countPages" min="1">
+    <input name="countPages" type="number" class="form-control" ng-model="countPages" min="1" ng-change="checkForm()">
     <label translate>sizeFile</label>
-    <input name="sizeFile" type="number" class="form-control" ng-model="sizeFile" min="1">
+    <input name="sizeFile" type="number" class="form-control" ng-model="sizeFile" min="1" ng-change="checkForm()">
+  </div>
+  <div class="col-lg-6">
     <label translate>addressFileOnDisk</label>
-    <input id="addressFileOnDisk" name="addressFileOnDisk" type="name" class="form-control" ng-model="addressFileOnDisk">
+    <input id="addressFileOnDisk" name="addressFileOnDisk" type="name" class="form-control" ng-model="addressFileOnDisk" ng-change="checkForm()">
     <label translate>addressFileOnNet</label>
-    <input id="addressFileOnNet" name="addressFileOnNet" type="name" class="form-control" ng-model="addressFileOnNet">
+    <input id="addressFileOnNet" name="addressFileOnNet" type="name" class="form-control" ng-model="addressFileOnNet" ng-change="checkForm()">
     <label translate>author</label>
     <select class="form-control" ng-options="author.lastName for author in authors" ng-model="selAuthor" ng-change="checkForm()">
-      <option value="" disabled>{{author.lastName}}</option>
+      <option value="" disabled>{{selAuthor.lastName}}</option>
     </select>
     <label translate>publisher</label>
     <select class="form-control" ng-options="publisher.name for publisher in publishers" ng-model="selPublisher" ng-change="checkForm()">
-      <option value="" disabled>{{publisher.name}}</option>
+      <option value="" disabled>{{selPublisher.name}}</option>
     </select>
   </div>
   </ng-form>
   <div class="col-lg-12 tools">
-    <button type="submit" class="btn btn-primary" ng-click="save()" translate><i class="glyphicon glyphicon-floppy-disk"></i> save</button>
+    <button type="submit" ng-class="{'disabled': !formValid}" class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> <span translate>save</span></button>
     <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
   </div>
 </div>

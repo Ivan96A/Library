@@ -10,12 +10,6 @@
 
 		sc.action = 'edit';
 
-		sc.target = { 
-				target: '/dev/logo?id=' + sc.id,
-				testChunks: false,
-				singleFile: true
-			};
-
 		AuthorService.getAll().success( function (data) {
 			sc.authors = data.content;
 		});
@@ -36,6 +30,23 @@
 			sc.addressFileOnDisk = sc.book.addressFileOnDisk;
 			sc.addressFileOnNet = sc.book.addressFileOnNet;
 			sc.selAuthor = sc.book.author;
+			sc.selPublisher = sc.book.publisher;
+
+			sc.checkForm = function () {
+	            if (sc.name != ''
+	                && sc.publisherYear != '' 
+	                && sc.countPages != '' 
+	                && sc.sizeFile != '' 
+	                && sc.addressFileOnDisk != '' 
+	                && sc.addressFileOnNet != '' 
+	                && sc.selAuthor != '' 
+	                && sc.selPublisher != '' 
+	                && sc.bookForm.$valid
+	                ) {
+	                sc.formValid = true;
+	            }
+	            else sc.formValid = false;
+	        }
  
 			sc.save = function () {
 				sc.book = {
@@ -50,19 +61,11 @@
 	                'publisher': sc.selPublisher
 				}
 
-				if (sc.name != ''
-	            	&& sc.publisherYear != '' 
-	            	&& sc.countPages != '' 
-	            	&& sc.sizeFile != '' 
-	            	&& sc.addressFileOnDisk != '' 
-	            	&& sc.addressFileOnNet != '' 
-            	) {
-	                BookService.update(sc.book)
+				if (sc.formValid) BookService.update(sc.book)
 						.success(function() {
 						    sc.closeThisDialog(true);
-						    sc.loadPage(1);
+						    sc.loadPage(sc.currentPage);
 						});
-            	} else alert('Error');
 			}
 		});
 	}

@@ -53,18 +53,14 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, publisherName, authorName) {
+		sc.loadPage = function(currentPage, name, publisherName, authorName) {
 			
-			BookService.getPage(currentPage - 1, 10, publisherName, authorName)
+			BookService.getPage(currentPage - 1, 10, name, publisherName, authorName)
 			.success(function (data){
 				sc.main = data;
 			});
 		};
 
 		sc.loadPage(1); 
-
-		$http.get('app/shared/dropdown/countries/countries.json').success(function (data) {
-			sc.countriesWithFlags = data;
-		});		
 	};
 })();

@@ -261,19 +261,15 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, publisherName, authorName) {
+		sc.loadPage = function(currentPage, name, publisherName, authorName) {
 			
-			BookService.getPage(currentPage - 1, 10, publisherName, authorName)
+			BookService.getPage(currentPage - 1, 10, name, publisherName, authorName)
 			.success(function (data){
 				sc.main = data;
 			});
 		};
 
 		sc.loadPage(1); 
-
-		$http.get('app/shared/dropdown/countries/countries.json').success(function (data) {
-			sc.countriesWithFlags = data;
-		});		
 	};
 })();
 
@@ -358,11 +354,12 @@
                 }); 
         };
 
-        this.getPage = function (page, size, publisherName, authorName) {
+        this.getPage = function (page, size, name, publisherName, authorName) {
             return $http.get(urlBase, { 
                     params: { 
                         publisherName: publisherName,
                         authorName: authorName,
+                        name: name,
                         page: page, 
                         size: size 
                     }
@@ -838,7 +835,7 @@
 			BookService.delete(sc.id)
 			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Book "' + bookName + '" could not be deleted because is in use yet';
 			  }); 
@@ -857,12 +854,6 @@
 		var sc = $scope;
 
 		sc.action = 'edit';
-
-		sc.target = { 
-				target: '/dev/logo?id=' + sc.id,
-				testChunks: false,
-				singleFile: true
-			};
 
 		AuthorService.getAll().success( function (data) {
 			sc.authors = data.content;
@@ -884,6 +875,23 @@
 			sc.addressFileOnDisk = sc.book.addressFileOnDisk;
 			sc.addressFileOnNet = sc.book.addressFileOnNet;
 			sc.selAuthor = sc.book.author;
+			sc.selPublisher = sc.book.publisher;
+
+			sc.checkForm = function () {
+	            if (sc.name != ''
+	                && sc.publisherYear != '' 
+	                && sc.countPages != '' 
+	                && sc.sizeFile != '' 
+	                && sc.addressFileOnDisk != '' 
+	                && sc.addressFileOnNet != '' 
+	                && sc.selAuthor != '' 
+	                && sc.selPublisher != '' 
+	                && sc.bookForm.$valid
+	                ) {
+	                sc.formValid = true;
+	            }
+	            else sc.formValid = false;
+	        }
  
 			sc.save = function () {
 				sc.book = {
@@ -898,19 +906,11 @@
 	                'publisher': sc.selPublisher
 				}
 
-				if (sc.name != ''
-	            	&& sc.publisherYear != '' 
-	            	&& sc.countPages != '' 
-	            	&& sc.sizeFile != '' 
-	            	&& sc.addressFileOnDisk != '' 
-	            	&& sc.addressFileOnNet != '' 
-            	) {
-	                BookService.update(sc.book)
+				if (sc.formValid) BookService.update(sc.book)
 						.success(function() {
 						    sc.closeThisDialog(true);
-						    sc.loadPage(1);
+						    sc.loadPage(sc.currentPage);
 						});
-            	} else alert('Error');
 			}
 		});
 	}
@@ -923,7 +923,7 @@
     .module('main')
     .controller('BookNewCtrl', BookNewCtrl);
 
-    function BookNewCtrl($scope, $state, $location, $document, BookService) {
+    function BookNewCtrl($scope, $state, $location, $document, BookService, AuthorService, PublisherService) {
         var sc = $scope;
 
         sc.action = 'add';
@@ -934,6 +934,32 @@
         sc.sizeFile = '';
         sc.addressFileOnDisk = '';
         sc.addressFileOnNet = '';
+        sc.selAuthor = '';
+        sc.selPublisher = '';
+
+        AuthorService.getAll().success( function (data) {
+            sc.authors = data.content;
+        });
+
+        PublisherService.getAll().success( function (data) {
+            sc.publishers = data.content;
+        });
+
+        sc.checkForm = function () {
+            if (sc.name != ''
+                && sc.publisherYear != '' 
+                && sc.countPages != '' 
+                && sc.sizeFile != '' 
+                && sc.addressFileOnDisk != '' 
+                && sc.addressFileOnNet != '' 
+                && sc.selAuthor != '' 
+                && sc.selPublisher != '' 
+                && sc.bookForm.$valid
+                ) {
+                sc.formValid = true;
+            }
+            else sc.formValid = false;
+        }
 
         sc.save = function() {
             sc.developer = {
@@ -943,24 +969,16 @@
                 'sizeFile': sc.sizeFile,
                 'addressFileOnDisk': sc.addressFileOnDisk,
                 'addressFileOnNet': sc.addressFileOnNet,
-                'author': {"id":1,"firstName":"Ivan","lastName":"Arabchuk","email":"ivan@mail.com","birthday":"1996-09-12"},
-                'publisher': {"id":1,"name":"Svitanok","email":"svit@mail.com","officialSite":"svit.com","address":"Kiyv","telephoneNumber":"09932423423"},
+                'author': sc.selAuthor,
+                'publisher': sc.selPublisher,
                 'typeFile': {}
             };
 
-            if (sc.name != ''
-            	&& sc.publisherYear != '' 
-            	&& sc.countPages != '' 
-            	&& sc.sizeFile != '' 
-            	&& sc.addressFileOnDisk != '' 
-            	&& sc.addressFileOnNet != '' 
-            ) {
-                BookService.new(sc.developer)
+            if (sc.formValid) BookService.new(sc.developer)
 					.success(function() {
 					    sc.closeThisDialog(true);
-					    sc.loadPage(1);
+					    sc.loadPage(sc.currentPage);
 					});
-            } else alert('Error');
         };
 
     };
