@@ -20,9 +20,6 @@ public class Image {
     @Column(name = "image", length = 3000000)
     private String imageString;
 
-    @Transient
-    private byte[] image;
-
     public Image() {
 
     }
@@ -47,11 +44,4 @@ public class Image {
         this.imageString = imageString;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 }
