@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addImage(MultipartFile image, Long id) {
-        Image img = null;
+        Image img = new Image();
         Book book = bookRepository.findOne(id);
         try {
             img.setImageString(Base64Utils.encodeToString(image.getBytes()));
