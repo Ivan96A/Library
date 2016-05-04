@@ -78,7 +78,7 @@ public class BookController {
             value = "/image",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public Image getImageByBookId(@RequestParam("id") Long id) {
+    public String getImageByBookId(@RequestParam("id") Long id) {
         return bookService.getImage(id);
     }
 

@@ -50,11 +50,11 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findOne(id);
         try {
             img = encode(image);
+            book.setImage(img);
+            bookRepository.saveAndFlush(book);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        book.setImage(img);
-        bookRepository.saveAndFlush(book);
     }
 
     @Override
@@ -75,10 +75,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Image getImage(Long id) {
-        Image image = bookRepository.getOne(id).getImage();
-        Image decodedImage = decodeImages(image);
-        return decodedImage;
+    public String getImage(Long id) {
+        Book book = findById(id);
+        return "{\"image\": " + book.getImage() + "}";
     }
 
     private Image encode(MultipartFile image) throws IOException {
