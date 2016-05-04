@@ -52,13 +52,9 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, name, release, devName, licName) {
-			if (release != null) {
-				var date = new Date(release);
-				release = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-			}
+		sc.loadPage = function(currentPage, name) {
 
-			PublisherService.getPage(currentPage - 1, 10, name, release, devName, licName)
+			PublisherService.getPage(currentPage - 1, 10, name)
 			.success(function (data){
 				sc.main = data;
 			});

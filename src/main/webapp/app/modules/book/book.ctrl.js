@@ -13,7 +13,7 @@
 
 		sc.tableHeader = 
 		[ 
-		'nameBook', 
+		'name',
 		'publisherYear',
 		'countPages',
 		'sizeFile',
@@ -53,11 +53,9 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, name, country) {
-			if (name == '') name = null;
-			if (country == '') country = null;
+		sc.loadPage = function(currentPage, publisherName, authorName) {
 			
-			BookService.getPage(currentPage - 1, 10, name, country)
+			BookService.getPage(currentPage - 1, 10, publisherName, authorName)
 			.success(function (data){
 				sc.main = data;
 			});

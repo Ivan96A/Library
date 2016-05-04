@@ -12,7 +12,7 @@
 		sc.id = $stateParams.id;
 
 		sc.target = { 
-				target: '/dev/logo?id=' + $stateParams.id,
+				target: '/book/logo?id=' + $stateParams.id,
 				testChunks: false,
 				singleFile: true
 			};

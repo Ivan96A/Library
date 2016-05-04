@@ -113,8 +113,8 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, name, type) {
-			AuthorService.getPage(currentPage - 1, 10, name, type)
+		sc.loadPage = function(currentPage, name) {
+			AuthorService.getPage(currentPage - 1, 10, name)
 			.success(function (data){
 				sc.main = data;
 			});
@@ -192,13 +192,12 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size, name, type) {
+        this.getPage = function (currentPage, size, name) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
                         size: size ,
-                        name: name,
-                        type: type
+                        name: name
                     }
             });
         };
@@ -222,7 +221,7 @@
 
 		sc.tableHeader = 
 		[ 
-		'nameBook', 
+		'name',
 		'publisherYear',
 		'countPages',
 		'sizeFile',
@@ -262,11 +261,9 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, name, country) {
-			if (name == '') name = null;
-			if (country == '') country = null;
+		sc.loadPage = function(currentPage, publisherName, authorName) {
 			
-			BookService.getPage(currentPage - 1, 10, name, country)
+			BookService.getPage(currentPage - 1, 10, publisherName, authorName)
 			.success(function (data){
 				sc.main = data;
 			});
@@ -361,12 +358,12 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size, name, country) {
+        this.getPage = function (page, size, publisherName, authorName) {
             return $http.get(urlBase, { 
                     params: { 
-                        name: name,
-                        country: country,
-                        page: currentPage, 
+                        publisherName: publisherName,
+                        authorName: authorName,
+                        page: page, 
                         size: size 
                     }
             });
@@ -448,13 +445,9 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, name, release, devName, licName) {
-			if (release != null) {
-				var date = new Date(release);
-				release = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-			}
+		sc.loadPage = function(currentPage, name) {
 
-			PublisherService.getPage(currentPage - 1, 10, name, release, devName, licName)
+			PublisherService.getPage(currentPage - 1, 10, name)
 			.success(function (data){
 				sc.main = data;
 			});
@@ -536,15 +529,12 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size, name, release, devName, licName) {
+        this.getPage = function (currentPage, size, name) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
                         size: size,
-                        name: name,
-                        release: release,
-                        devName: devName,
-                        licName: licName
+                        name: name
                     }
             });
         };
@@ -715,7 +705,7 @@
 			AuthorService.delete(sc.id)
 			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Author "'+ authorName +'" could not be deleted because is in use yet';
 			  }); 
@@ -771,7 +761,7 @@
 				.success(function (data) {
 					sc.author = null;
 					sc.closeThisDialog(true);
-					sc.loadPage(1);
+					sc.loadPage(sc.currentPage);
 				});
 				
 			}
@@ -821,7 +811,7 @@
 			.success(function (data) {
 				sc.author = null;
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			});
 		}
 	};
@@ -863,7 +853,7 @@
 	.module('main')
 	.controller('BookEditCtrl', BookEditCtrl);
 
-	function BookEditCtrl ($scope, $state, $location, BookService) {
+	function BookEditCtrl ($scope, $state, $location, BookService, AuthorService, PublisherService) {
 		var sc = $scope;
 
 		sc.action = 'edit';
@@ -874,29 +864,41 @@
 				singleFile: true
 			};
 
+		AuthorService.getAll().success( function (data) {
+			sc.authors = data.content;
+		});
+
+		PublisherService.getAll().success( function (data) {
+			sc.publishers = data.content;
+		});
+
 		BookService.get(sc.id)
 		.success(function (data) {
 			sc.book = data;
 
 			sc.id = sc.book.id;
-			sc.nameBook = sc.book.nameBook;
+			sc.name = sc.book.name;
 			sc.publisherYear = new Date(sc.book.publisherYear);
 			sc.countPages = sc.book.countPages;
 			sc.sizeFile = sc.book.sizeFile;
 			sc.addressFileOnDisk = sc.book.addressFileOnDisk;
 			sc.addressFileOnNet = sc.book.addressFileOnNet;
+			sc.selAuthor = sc.book.author;
  
 			sc.save = function () {
 				sc.book = {
-					'nameBook': sc.nameBook,
-	                'publisherYear': sc.publisherYear,
+					'id': sc.id,
+					'name': sc.name,
+	                'publisherYear': sc.publisherYear.getFullYear() + '-' + sc.publisherYear.getMonth() + '-' + sc.publisherYear.getDate(),
 	                'countPages': sc.countPages,
 	                'sizeFile': sc.sizeFile,
 	                'addressFileOnDisk': sc.addressFileOnDisk,
-	                'addressFileOnNet': sc.addressFileOnNet
+	                'addressFileOnNet': sc.addressFileOnNet,
+	                'author': sc.selAuthor,
+	                'publisher': sc.selPublisher
 				}
 
-				if (sc.nameBook != '' 
+				if (sc.name != ''
 	            	&& sc.publisherYear != '' 
 	            	&& sc.countPages != '' 
 	            	&& sc.sizeFile != '' 
@@ -926,7 +928,7 @@
 
         sc.action = 'add';
 
-        sc.nameBook = ''; 
+        sc.name = '';
         sc.publisherYear = new Date();
         sc.countPages = '';
         sc.sizeFile = '';
@@ -935,7 +937,7 @@
 
         sc.save = function() {
             sc.developer = {
-                'nameBook': sc.nameBook,
+                'name': sc.name,
                 'publisherYear': sc.publisherYear.getFullYear() + '-' + sc.publisherYear.getMonth() + '-' + sc.publisherYear.getDate(),
                 'countPages': sc.countPages,
                 'sizeFile': sc.sizeFile,
@@ -946,7 +948,7 @@
                 'typeFile': {}
             };
 
-            if (sc.nameBook != '' 
+            if (sc.name != ''
             	&& sc.publisherYear != '' 
             	&& sc.countPages != '' 
             	&& sc.sizeFile != '' 
@@ -978,7 +980,7 @@
 		sc.id = $stateParams.id;
 
 		sc.target = { 
-				target: '/dev/logo?id=' + $stateParams.id,
+				target: '/book/logo?id=' + $stateParams.id,
 				testChunks: false,
 				singleFile: true
 			};

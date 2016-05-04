@@ -35,15 +35,12 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size, name, release, devName, licName) {
+        this.getPage = function (currentPage, size, name) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
                         size: size,
-                        name: name,
-                        release: release,
-                        devName: devName,
-                        licName: licName
+                        name: name
                     }
             });
         };

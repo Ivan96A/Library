@@ -35,12 +35,12 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size, name, country) {
+        this.getPage = function (page, size, publisherName, authorName) {
             return $http.get(urlBase, { 
                     params: { 
-                        name: name,
-                        country: country,
-                        page: currentPage, 
+                        publisherName: publisherName,
+                        authorName: authorName,
+                        page: page, 
                         size: size 
                     }
             });

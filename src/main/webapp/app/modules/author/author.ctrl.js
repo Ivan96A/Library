@@ -58,8 +58,8 @@
 			});
 		};
 
-		sc.loadPage = function(currentPage, name, type) {
-			AuthorService.getPage(currentPage - 1, 10, name, type)
+		sc.loadPage = function(currentPage, name) {
+			AuthorService.getPage(currentPage - 1, 10, name)
 			.success(function (data){
 				sc.main = data;
 			});

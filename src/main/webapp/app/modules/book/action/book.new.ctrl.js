@@ -10,7 +10,7 @@
 
         sc.action = 'add';
 
-        sc.nameBook = ''; 
+        sc.name = '';
         sc.publisherYear = new Date();
         sc.countPages = '';
         sc.sizeFile = '';
@@ -19,7 +19,7 @@
 
         sc.save = function() {
             sc.developer = {
-                'nameBook': sc.nameBook,
+                'name': sc.name,
                 'publisherYear': sc.publisherYear.getFullYear() + '-' + sc.publisherYear.getMonth() + '-' + sc.publisherYear.getDate(),
                 'countPages': sc.countPages,
                 'sizeFile': sc.sizeFile,
@@ -30,7 +30,7 @@
                 'typeFile': {}
             };
 
-            if (sc.nameBook != '' 
+            if (sc.name != ''
             	&& sc.publisherYear != '' 
             	&& sc.countPages != '' 
             	&& sc.sizeFile != '' 

@@ -23,7 +23,7 @@
           </thead>
           <tbody ng-switch="table">
             <tr ng-switch-when="book" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
-              <td><a ng-href="#/book/{{row.id}}">{{row.nameBook}}</a></td>
+              <td><a ng-href="#/book/{{row.id}}">{{row.name}}</a></td>
               <td>{{row.publisherYear}}</td>
               <td>{{row.countPages}}</td>
               <td>{{row.sizeFile}}</td>

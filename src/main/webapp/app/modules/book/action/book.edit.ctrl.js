@@ -5,7 +5,7 @@
 	.module('main')
 	.controller('BookEditCtrl', BookEditCtrl);
 
-	function BookEditCtrl ($scope, $state, $location, BookService) {
+	function BookEditCtrl ($scope, $state, $location, BookService, AuthorService, PublisherService) {
 		var sc = $scope;
 
 		sc.action = 'edit';
@@ -16,29 +16,41 @@
 				singleFile: true
 			};
 
+		AuthorService.getAll().success( function (data) {
+			sc.authors = data.content;
+		});
+
+		PublisherService.getAll().success( function (data) {
+			sc.publishers = data.content;
+		});
+
 		BookService.get(sc.id)
 		.success(function (data) {
 			sc.book = data;
 
 			sc.id = sc.book.id;
-			sc.nameBook = sc.book.nameBook;
+			sc.name = sc.book.name;
 			sc.publisherYear = new Date(sc.book.publisherYear);
 			sc.countPages = sc.book.countPages;
 			sc.sizeFile = sc.book.sizeFile;
 			sc.addressFileOnDisk = sc.book.addressFileOnDisk;
 			sc.addressFileOnNet = sc.book.addressFileOnNet;
+			sc.selAuthor = sc.book.author;
  
 			sc.save = function () {
 				sc.book = {
-					'nameBook': sc.nameBook,
-	                'publisherYear': sc.publisherYear,
+					'id': sc.id,
+					'name': sc.name,
+	                'publisherYear': sc.publisherYear.getFullYear() + '-' + sc.publisherYear.getMonth() + '-' + sc.publisherYear.getDate(),
 	                'countPages': sc.countPages,
 	                'sizeFile': sc.sizeFile,
 	                'addressFileOnDisk': sc.addressFileOnDisk,
-	                'addressFileOnNet': sc.addressFileOnNet
+	                'addressFileOnNet': sc.addressFileOnNet,
+	                'author': sc.selAuthor,
+	                'publisher': sc.selPublisher
 				}
 
-				if (sc.nameBook != '' 
+				if (sc.name != ''
 	            	&& sc.publisherYear != '' 
 	            	&& sc.countPages != '' 
 	            	&& sc.sizeFile != '' 

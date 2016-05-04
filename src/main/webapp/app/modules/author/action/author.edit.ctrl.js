@@ -45,7 +45,7 @@
 				.success(function (data) {
 					sc.author = null;
 					sc.closeThisDialog(true);
-					sc.loadPage(1);
+					sc.loadPage(sc.currentPage);
 				});
 				
 			}

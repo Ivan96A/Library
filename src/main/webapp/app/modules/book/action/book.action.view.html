@@ -7,7 +7,7 @@
   <ng-form>
   <div class="col-lg-12">
     <label translate>nameBook</label>
-    <input id="nameBook" name="nameBook" type="name" class="form-control" ng-model="nameBook" maxlength="20">
+    <input id="name" name="name" type="name" class="form-control" ng-model="name" maxlength="20">
     <label translate>publisherYear</label>
     <div class="input-group">
       <input name="publisherYear" ng-model="publisherYear" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="publisherYearValue" readonly>
@@ -23,6 +23,14 @@
     <input id="addressFileOnDisk" name="addressFileOnDisk" type="name" class="form-control" ng-model="addressFileOnDisk">
     <label translate>addressFileOnNet</label>
     <input id="addressFileOnNet" name="addressFileOnNet" type="name" class="form-control" ng-model="addressFileOnNet">
+    <label translate>author</label>
+    <select class="form-control" ng-options="author.lastName for author in authors" ng-model="selAuthor" ng-change="checkForm()">
+      <option value="" disabled>{{author.lastName}}</option>
+    </select>
+    <label translate>publisher</label>
+    <select class="form-control" ng-options="publisher.name for publisher in publishers" ng-model="selPublisher" ng-change="checkForm()">
+      <option value="" disabled>{{publisher.name}}</option>
+    </select>
   </div>
   </ng-form>
   <div class="col-lg-12 tools">
