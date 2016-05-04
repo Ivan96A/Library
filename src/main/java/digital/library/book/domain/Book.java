@@ -72,7 +72,7 @@ public class Book implements Serializable {
 
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private Image image;
 
     public Book() {
