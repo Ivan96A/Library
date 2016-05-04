@@ -2,6 +2,7 @@ package digital.library.book.controller;
 
 import digital.library.book.domain.Book;
 import digital.library.book.service.BookService;
+import digital.library.image.domain.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,9 +78,8 @@ public class BookController {
             value = "/image",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getImageByBookId(@RequestParam("id") Long id) {
-        String images = bookService.findById(id).getImage().getImage();
-        return images;
+    public Image getImageByBookId(@RequestParam("id") Long id) {
+        return bookService.getImage(id);
     }
 
     @RequestMapping(

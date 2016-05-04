@@ -1,5 +1,7 @@
 package digital.library.image.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -14,15 +16,19 @@ public class Image {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @Column(name = "image", length = 3000000)
-    private String image;
+    private String imageString;
+
+    @Transient
+    private byte[] image;
 
     public Image() {
 
     }
 
-    public Image(String image) {
-        this.image = image;
+    public Image(String imageString) {
+        this.imageString = imageString;
     }
 
     public Long getId() {
@@ -33,11 +39,19 @@ public class Image {
         this.id = id;
     }
 
-    public String getImage() {
+    public String getImageString() {
+        return imageString;
+    }
+
+    public void setImageString(String imageString) {
+        this.imageString = imageString;
+    }
+
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

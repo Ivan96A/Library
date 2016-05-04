@@ -21,20 +21,15 @@ insert into authors(first_name, last_name, email, birthday)
   values('KDD', 'kdd@mail.com', 'kdd.com', 'Kiyv', '0995754646545');
 
 
-insert into images(image)
-values('Zm90by5qcGc=');
 
-insert into images(image)
-values('Zm90bzIuanBn');
-
-insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk,  address_file_on_net, type_file, publishers_id, authors_id, image_id)
-  values('king Doom', '2014-09-14', 234, 45, 'C:/sdf', 'book.com', 0,1, 1, 2);
-insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk,  address_file_on_net, type_file,  publishers_id, authors_id, image_id)
-  values('Spiderman', '1998-09-23', 800, 78, 'C:/sdf', 'book.com',2, 2, 3, 1);
-  insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net, type_file, publishers_id, authors_id,  image_id)
-  values('book3', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 1,3, 1, 1);
-  insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk,  address_file_on_net,  type_file, publishers_id, authors_id,  image_id)
-  values('book4', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 0, 2, 3, 1);
+insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk,  address_file_on_net, type_file, publishers_id, authors_id)
+  values('king Doom', '2014-09-14', 234, 45, 'C:/sdf', 'book.com', 0,1, 1);
+insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk,  address_file_on_net, type_file,  publishers_id, authors_id)
+  values('Spiderman', '1998-09-23', 800, 78, 'C:/sdf', 'book.com',2, 2, 3);
+  insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk, address_file_on_net, type_file, publishers_id, authors_id)
+  values('book3', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 1,3, 1);
+  insert into books(name, publisher_year, count_pages, size_file, address_file_on_disk,  address_file_on_net,  type_file, publishers_id, authors_id)
+  values('book4', '1998-09-23', 800, 78, 'C:/sdf', 'book.com', 0, 2, 3);
 
 
 

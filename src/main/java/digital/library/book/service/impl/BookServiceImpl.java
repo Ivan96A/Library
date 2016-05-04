@@ -13,6 +13,7 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Created by Iwan on 11.03.2016.
@@ -27,11 +28,6 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    @Override
-    public Page<Book> getAll(Pageable pageable) {
-        Page<Book> page = bookRepository.findAll(pageable);
-        return page;
-    }
 
     @Override
     public Book findById(Long id) {
@@ -53,7 +49,7 @@ public class BookServiceImpl implements BookService {
         Image img = null;
         Book book = bookRepository.findOne(id);
         try {
-            img = getImage(image);
+            img = encode(image);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,10 +74,28 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByPublisherAndAuthor(pageable, bookName, publisherName, authorName);
     }
 
-    private Image getImage(MultipartFile image) throws IOException {
+    @Override
+    public Image getImage(Long id) {
+        Image image = bookRepository.getOne(id).getImage();
+        Image decodedImage = decodeImages(image);
+        return decodedImage;
+    }
 
+    private Image encode(MultipartFile image) throws IOException {
         String img = Base64Utils.encodeToString(image.getBytes());
         return new Image(img);
     }
+
+    private Image decodeImages(Image image) {
+        Image decodedImage = null;
+        byte[] decodeFromString = Base64Utils.decodeFromString(image.getImageString());
+        Image i = new Image();
+        i.setImage(decodeFromString);
+        i.setId(image.getId());
+
+        return i;
+    }
+
+
 
 }
