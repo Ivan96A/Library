@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService {
             e.printStackTrace();
         }
         book.setImage(img);
-        bookRepository.save(book);
+        bookRepository.saveAndFlush(book);
     }
 
     @Override
