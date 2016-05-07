@@ -31,6 +31,7 @@
 			sc.addressFileOnNet = sc.book.addressFileOnNet;
 			sc.selAuthor = sc.book.author;
 			sc.selPublisher = sc.book.publisher;
+			sc.typeFile = sc.book.typeFile; 
 
 			sc.checkForm = function () {
 	            if (sc.name != ''
@@ -41,6 +42,7 @@
 	                && sc.addressFileOnNet != '' 
 	                && sc.selAuthor != '' 
 	                && sc.selPublisher != '' 
+	                && sc.typeFile != '' 
 	                && sc.bookForm.$valid
 	                ) {
 	                sc.formValid = true;
@@ -58,7 +60,8 @@
 	                'addressFileOnDisk': sc.addressFileOnDisk,
 	                'addressFileOnNet': sc.addressFileOnNet,
 	                'author': sc.selAuthor,
-	                'publisher': sc.selPublisher
+	                'publisher': sc.selPublisher,
+	                'typeFile': sc.typeFile
 				}
 
 				if (sc.formValid) BookService.update(sc.book)

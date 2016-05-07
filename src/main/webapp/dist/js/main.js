@@ -219,12 +219,13 @@
 		sc.table = 'book';
 		sc.base = '/' + sc.table;
 
-		sc.tableHeader = 
+		sc.tableHeader =  
 		[ 
 		'name',
 		'publisherYear',
 		'countPages',
 		'sizeFile',
+		'typeFile',
 		'addressFileOnDisk',
 		'addressFileOnNet'
 		];
@@ -876,6 +877,7 @@
 			sc.addressFileOnNet = sc.book.addressFileOnNet;
 			sc.selAuthor = sc.book.author;
 			sc.selPublisher = sc.book.publisher;
+			sc.typeFile = sc.book.typeFile; 
 
 			sc.checkForm = function () {
 	            if (sc.name != ''
@@ -886,6 +888,7 @@
 	                && sc.addressFileOnNet != '' 
 	                && sc.selAuthor != '' 
 	                && sc.selPublisher != '' 
+	                && sc.typeFile != '' 
 	                && sc.bookForm.$valid
 	                ) {
 	                sc.formValid = true;
@@ -903,7 +906,8 @@
 	                'addressFileOnDisk': sc.addressFileOnDisk,
 	                'addressFileOnNet': sc.addressFileOnNet,
 	                'author': sc.selAuthor,
-	                'publisher': sc.selPublisher
+	                'publisher': sc.selPublisher,
+	                'typeFile': sc.typeFile
 				}
 
 				if (sc.formValid) BookService.update(sc.book)
@@ -936,6 +940,7 @@
         sc.addressFileOnNet = '';
         sc.selAuthor = '';
         sc.selPublisher = '';
+        sc.typeFile = '';
 
         AuthorService.getAll().success( function (data) {
             sc.authors = data.content;
@@ -953,7 +958,8 @@
                 && sc.addressFileOnDisk != '' 
                 && sc.addressFileOnNet != '' 
                 && sc.selAuthor != '' 
-                && sc.selPublisher != '' 
+                && sc.selPublisher != ''
+                && sc.typeFile != '' 
                 && sc.bookForm.$valid
                 ) {
                 sc.formValid = true;
@@ -971,7 +977,7 @@
                 'addressFileOnNet': sc.addressFileOnNet,
                 'author': sc.selAuthor,
                 'publisher': sc.selPublisher,
-                'typeFile': {}
+                'typeFile': sc.typeFile
             };
 
             if (sc.formValid) BookService.new(sc.developer)
@@ -1010,8 +1016,8 @@
 
 	  	sc.getLogoById = function (id) {
 	  		BookService.getLogo(id)
-	  		.success( function (data) {
-	  			sc.bookImage = data;
+	  		.success( function (data) { 
+	  			sc.bookImage = data.image;
 	  		});
 	  	}
 

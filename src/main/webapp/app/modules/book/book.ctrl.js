@@ -11,12 +11,13 @@
 		sc.table = 'book';
 		sc.base = '/' + sc.table;
 
-		sc.tableHeader = 
+		sc.tableHeader =  
 		[ 
 		'name',
 		'publisherYear',
 		'countPages',
 		'sizeFile',
+		'typeFile',
 		'addressFileOnDisk',
 		'addressFileOnNet'
 		];

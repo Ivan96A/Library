@@ -18,6 +18,7 @@
         sc.addressFileOnNet = '';
         sc.selAuthor = '';
         sc.selPublisher = '';
+        sc.typeFile = '';
 
         AuthorService.getAll().success( function (data) {
             sc.authors = data.content;
@@ -35,7 +36,8 @@
                 && sc.addressFileOnDisk != '' 
                 && sc.addressFileOnNet != '' 
                 && sc.selAuthor != '' 
-                && sc.selPublisher != '' 
+                && sc.selPublisher != ''
+                && sc.typeFile != '' 
                 && sc.bookForm.$valid
                 ) {
                 sc.formValid = true;
@@ -53,7 +55,7 @@
                 'addressFileOnNet': sc.addressFileOnNet,
                 'author': sc.selAuthor,
                 'publisher': sc.selPublisher,
-                'typeFile': {}
+                'typeFile': sc.typeFile
             };
 
             if (sc.formValid) BookService.new(sc.developer)

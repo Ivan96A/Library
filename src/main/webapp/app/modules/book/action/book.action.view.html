@@ -33,6 +33,13 @@
     <select class="form-control" ng-options="publisher.name for publisher in publishers" ng-model="selPublisher" ng-change="checkForm()">
       <option value="" disabled>{{selPublisher.name}}</option>
     </select>
+    <label translate>typeFile</label>
+    <select class="form-control" ng-model="typeFile" ng-change="checkForm()">
+      <!-- <option disabled>{{typeFile}}</option> -->
+      <option>PDF</option>
+      <option>DJVU</option>
+      <option>WORD</option>
+    </select>
   </div>
   </ng-form>
   <div class="col-lg-12 tools">

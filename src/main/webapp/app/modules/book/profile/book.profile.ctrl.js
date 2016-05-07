@@ -24,8 +24,8 @@
 
 	  	sc.getLogoById = function (id) {
 	  		BookService.getLogo(id)
-	  		.success( function (data) {
-	  			sc.bookImage = data;
+	  		.success( function (data) { 
+	  			sc.bookImage = data.image;
 	  		});
 	  	}
 
