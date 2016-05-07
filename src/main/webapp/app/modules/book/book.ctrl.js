@@ -22,6 +22,16 @@
 		'addressFileOnNet'
 		];
 
+		sc.exportOptions = {
+			type: 'pdf', 
+			escape: true, 
+			tableName: sc.table, 
+			pdfFontSize:14, 
+			pdfLeftMargin:20, 
+			htmlContent: 'true',
+			ignoreColumn: [3,4,5]
+		}
+
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
 				template: '/app/modules/book/action/book.action.view.html', 

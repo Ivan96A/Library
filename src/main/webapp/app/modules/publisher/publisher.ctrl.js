@@ -20,6 +20,15 @@
 		'telephoneNumber'
 		];
 
+		sc.exportOptions = {
+			type: 'pdf', 
+			escape: true, 
+			tableName: sc.table, 
+			pdfFontSize:14, 
+			pdfLeftMargin:20, 
+			htmlContent: true 
+		}
+
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
 				template: '/app/modules/publisher/action/publisher.action.view.html', 

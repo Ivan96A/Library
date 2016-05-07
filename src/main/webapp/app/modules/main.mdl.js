@@ -12,7 +12,8 @@
 		'pascalprecht.translate', 
 		'base64',
 		'flow',
-		'ngDialog'
+		'ngDialog',
+		'ceibo.components.table.export'
 		])
 	.config(configure).
 	run(run);
@@ -49,6 +50,6 @@
 	}
 
 	function run($translate, $rootScope, $templateCache) {
-		$translate.use('uk');
+		// $translate.use('uk');
 	}
 })();

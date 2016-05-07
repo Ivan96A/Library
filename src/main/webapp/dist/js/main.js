@@ -12,7 +12,8 @@
 		'pascalprecht.translate', 
 		'base64',
 		'flow',
-		'ngDialog'
+		'ngDialog',
+		'ceibo.components.table.export'
 		])
 	.config(configure).
 	run(run);
@@ -49,7 +50,7 @@
 	}
 
 	function run($translate, $rootScope, $templateCache) {
-		$translate.use('uk');
+		// $translate.use('uk');
 	}
 })();
 
@@ -80,6 +81,15 @@
 		'email',
 		'birthday'
 		];
+
+		sc.exportOptions = {
+			type: 'pdf', 
+			escape: true, 
+			tableName: sc.table, 
+			pdfFontSize:14, 
+			pdfLeftMargin:20, 
+			htmlContent: true 
+		}
 
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
@@ -229,6 +239,16 @@
 		'addressFileOnDisk',
 		'addressFileOnNet'
 		];
+
+		sc.exportOptions = {
+			type: 'pdf', 
+			escape: true, 
+			tableName: sc.table, 
+			pdfFontSize:14, 
+			pdfLeftMargin:20, 
+			htmlContent: 'true',
+			ignoreColumn: [3,4,5]
+		}
 
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
@@ -410,6 +430,15 @@
 		'address',
 		'telephoneNumber'
 		];
+
+		sc.exportOptions = {
+			type: 'pdf', 
+			escape: true, 
+			tableName: sc.table, 
+			pdfFontSize:14, 
+			pdfLeftMargin:20, 
+			htmlContent: true 
+		}
 
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
