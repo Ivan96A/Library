@@ -30,7 +30,7 @@ public class Publisher implements Serializable{
     private String email;
 
     @Size(min = 5, max = 250)
-    @Column(name = "officialSite")
+    @Column(name = "official_site")
     private String officialSite;
 
     @Size(min = 5, max = 50)
@@ -38,7 +38,7 @@ public class Publisher implements Serializable{
     private String address;
 
     @Size(min = 5, max = 100)
-    @Column(name = "telephoneNumber")
+    @Column(name = "telephone_number")
     private String telephoneNumber;
 
     @JsonIgnore

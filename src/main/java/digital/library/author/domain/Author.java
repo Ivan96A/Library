@@ -22,11 +22,11 @@ public class Author implements Serializable{
     private Long id;
 
     @Size(min = 5, max = 50)
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
     @Size(min = 5, max = 50)
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
     @Size(min = 5, max = 250)

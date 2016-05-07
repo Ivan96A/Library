@@ -2,7 +2,6 @@ package digital.library.book.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import digital.library.author.domain.Author;
-import digital.library.image.domain.Image;
 import digital.library.publisher.domain.Publisher;
 
 import javax.persistence.*;
@@ -44,36 +43,34 @@ public class Book implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "publisherYear")
+    @Column(name = "publisher_year")
     private Date publisherYear;
 
-    @Column(name = "countPages")
+    @Column(name = "count_pages")
     private Long countPages;
 
-    @Column(name = "sizeFile")
+    @Column(name = "size_file")
     private Long sizeFile;
 
-    @Column(name = "addressFileOnDisk")
+    @Column(name = "address_file_on_disk")
     private String addressFileOnDisk;
 
-    @Column(name = "addressFileOnNet")
+    @Column(name = "address_file_on_net")
     private String addressFileOnNet;
 
-    @Column(name = "typeFile")
+    @Column(name = "type_file")
     private TypeFile typeFile;
 
     @ManyToOne
-    @JoinColumn(name = "publishersId", nullable = false)
+    @JoinColumn(name = "publishers_id", nullable = false)
     private Publisher publisher;
 
     @ManyToOne
-    @JoinColumn(name = "authorsId", nullable = false)
+    @JoinColumn(name = "authors_id", nullable = false)
     private Author author;
 
-
-    @JsonIgnore
-    @OneToOne(cascade = {CascadeType.ALL})
-    private Image image;
+    @Column(name = "image", length = 300000000)
+    private String image;
 
     public Book() {
 
@@ -170,11 +167,19 @@ public class Book implements Serializable {
         this.addressFileOnNet = addressFileOnNet;
     }
 
-    public Image getImage() {
+    public TypeFile getTypeFile() {
+        return typeFile;
+    }
+
+    public void setTypeFile(TypeFile typeFile) {
+        this.typeFile = typeFile;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

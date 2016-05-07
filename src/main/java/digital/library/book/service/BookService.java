@@ -1,7 +1,6 @@
 package digital.library.book.service;
 
 import digital.library.book.domain.Book;
-import digital.library.image.domain.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +19,6 @@ public interface BookService {
     void delete(Book book);
 
     void addImage(MultipartFile image, Long id);
-
-    void deleteImage(Long imageId);
 
     String getImage(Long id);
 

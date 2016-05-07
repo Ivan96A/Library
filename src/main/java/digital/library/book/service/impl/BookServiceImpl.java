@@ -3,8 +3,6 @@ package digital.library.book.service.impl;
 import digital.library.book.domain.Book;
 import digital.library.book.repository.BookRepository;
 import digital.library.book.service.BookService;
-import digital.library.image.domain.Image;
-import digital.library.image.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +20,6 @@ import java.util.Set;
 @Component("bookService")
 public class BookServiceImpl implements BookService {
 
-    @Autowired
-    private ImageRepository imageRepository;
 
     @Autowired
     private BookRepository bookRepository;
@@ -46,11 +42,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addImage(MultipartFile image, Long id) {
-        Image img = new Image();
         Book book = bookRepository.findOne(id);
         try {
-            img.setImageString(Base64Utils.encodeToString(image.getBytes()));
-            book.setImage(img);
+            book.setImage(Base64Utils.encodeToString(image.getBytes()));
             bookRepository.saveAndFlush(book);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,17 +52,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteImage(Long imageId) {
-        imageRepository.delete(imageId);
-    }
-
-    @Override
     public Page<Book> findAllByBookNameAndPublisherAndAuthor(Pageable pageable, String bookName, String publisherName, String authorName) {
-        if(publisherName == null || publisherName.equals("")) publisherName = "%";
+        if (publisherName == null || publisherName.equals("")) publisherName = "%";
         else publisherName += "%";
-        if(authorName == null || authorName.equals("")) authorName = "%";
+        if (authorName == null || authorName.equals("")) authorName = "%";
         else authorName += "%";
-        if(bookName == null || bookName.equals("")) bookName = "%";
+        if (bookName == null || bookName.equals("")) bookName = "%";
         else bookName += "%";
 
         return bookRepository.findAllByPublisherAndAuthor(pageable, bookName, publisherName, authorName);
@@ -77,12 +66,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public String getImage(Long id) {
         Book book = findById(id);
-        return "{\"image\": " + book.getImage() + "}";
+        return "{\"image\": " + '"' + book.getImage() + '"' + "}";
     }
 
-    private Image encode(MultipartFile image) throws IOException {
-        String img = Base64Utils.encodeToString(image.getBytes());
-        return new Image(img);
-    }
 
 }

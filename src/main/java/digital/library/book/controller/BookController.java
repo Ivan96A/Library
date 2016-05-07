@@ -2,7 +2,6 @@ package digital.library.book.controller;
 
 import digital.library.book.domain.Book;
 import digital.library.book.service.BookService;
-import digital.library.image.domain.Image;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,13 +87,5 @@ public class BookController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void addImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile image) {
         bookService.addImage(image, id);
-    }
-
-    @RequestMapping(
-            value = "/image",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteImage(@RequestParam("id") Long imageId) {
-        bookService.deleteImage(imageId);
     }
 }
